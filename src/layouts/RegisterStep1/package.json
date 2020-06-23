@@ -1,0 +1,6 @@
+{
+  "name": "RegisterStep1",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./RegisterStep1.js"
+}

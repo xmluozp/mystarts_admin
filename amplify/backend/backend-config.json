@@ -1,0 +1,26 @@
+{
+	"auth": {
+		"mystartsadmin668f1b99": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": []
+		}
+	},
+	"api": {
+		"mystartsadmin": {
+			"service": "AppSync",
+			"providerPlugin": "awscloudformation",
+			"output": {
+				"authConfig": {
+					"additionalAuthenticationProviders": [],
+					"defaultAuthentication": {
+						"authenticationType": "AMAZON_COGNITO_USER_POOLS",
+						"userPoolConfig": {
+							"userPoolId": "authmystartsadmin668f1b99"
+						}
+					}
+				}
+			}
+		}
+	}
+}

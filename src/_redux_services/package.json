@@ -1,0 +1,6 @@
+{
+  "name": "_redux_services",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./_redux_services.js"
+}

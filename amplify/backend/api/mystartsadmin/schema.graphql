@@ -1,0 +1,193 @@
+# @auth(rules: [{allow:owner, operations: [create,update,delete]}])
+
+# ========================================= user
+
+type invitation @model {
+	id: ID!
+	dafaultFriends: [User] @connection #试一下这样存的是不是ID
+	fromUser: User @connection
+	inviteToken: String!
+}
+
+# 用户
+type User
+	@model
+	@auth(
+		rules: [
+			{ allow: owner, ownerField: "id" }
+			{ allow: groups, groups: ["admin"] }
+		]
+	) {
+	id: ID!
+	fullName: String
+	email: String!
+	avatar: Picture #强行规定大小，就不用担心preview，节省空间成本
+	organizations: [UserOrganization] @connection(name: "byUser")
+	conversations: [ConversationUser] @connection(name: "byUserConv")
+	messages: [Message] @connection(name: "UserMessages")
+	videos: [Video] @connection(name: "UserVideo", sortField: "createdAt")
+	friends: [User] @connection
+	watchs: [User] @connection
+	# TODO: friends
+}
+
+# 组织
+type Organization @model {
+	# @auth(
+	# 	rules: [
+	# 		{ allow: public, operations: [read] }
+	# 		{ allow: owner}
+	# 		{ allow: groups, groups: ["admin"] },
+	# 	]
+	# )
+	id: ID!
+	name: String!
+	brief: String
+	logo: Picture
+	bp: S3Object
+	tags: [String] # 可以手动输入
+	members: [UserOrganization] @connection(keyName: "byOrg", fields: ["id"])
+}
+
+# m2m
+type UserOrganization
+	@model(queries: null)
+	@key(name: "byUser", fields: ["userID", "organizationID"])
+	@key(name: "byOrg", fields: ["organizationID", "userID"]) {
+	id: ID!
+	userID: ID!
+	user: User! @connection(fields: ["userID"])
+	organizationID: ID!
+	organization: Organization! @connection(field: ["organizationID"])
+}
+
+# Tag是搜索用的，纯文本，这个仅作为下拉列表管理用
+type Tag @model {
+	id: ID!
+	name: String!
+	isActive: Boolean
+}
+# ========================================= social
+# 留言
+# 既然是社交，应该做成像linkedin那样的。实时和留言不要分太清。
+# https://www.ctolib.com/aws-samples-aws-appsync-chat.html
+
+# virtual entity, used to connect user with user for messaging
+type Conversation
+	@model(
+		mutations: { create: "createConvo" }
+		queries: { get: "getConvo" }
+		subscriptions: null
+	)
+	@auth(rules: [{ allow: owner, ownerField: "members" }]) {
+	id: ID!
+	messages: [Message] @connection(name: "ConvoMsgs", sortField: "createdAt")
+	users: [ConversationUser] @connection(name: "byConvUser")
+
+	# set owners
+	members: [String!]!
+}
+
+#
+type Message
+	@model(subscriptions: null, queries: null)
+	@auth(rules: [{ allow: owner, ownerField: "authorId" }]) {
+	id: ID!
+	content: String!
+	authorId: String
+	author: User @connection(name: "UserMessages", keyField: "authorId")
+	messageConversationId: ID!
+	conversation: Conversation! @connection(name: "ConvoMsgs")
+}
+
+# m2m
+type ConversationUser
+	@model(queries: null)
+	@key(name: "byUserConv", fields: ["userID", "conversationID"])
+	@key(name: "byConvUser", fields: ["conversationID", "userID"]) {
+	id: ID!
+	userID: ID!
+	user: User! @connection(fields: ["userID"])
+	conversationID: ID!
+	conversation: Conversation! @connection(fields: ["conversationID"])
+}
+
+# type Subscription {
+# 	onCreateConvoLink(convoLinkUserId: ID!): ConvoLink
+# 		@aws_subscribe(mutations: ["createConvoLink"])
+# 	onCreateMessage(messageConversationId: ID!): Message
+# 		@aws_subscribe(mutations: ["createMessage"])
+# }
+
+# ======================= notification
+type Notification @model {
+	id: ID!
+	content: String!
+	type: String! # announce/remind/message
+	action: String! # message, follow, newevent
+	receiverID: ID!
+	receiver: User! @connection(fields: ["receiverID"])
+	senderID: ID	
+	sender: User @connection(fields: ["senderID"]) # who triggers the notification
+	isRead: Boolean # move to redis later
+}
+
+# type NotificationSubscribe @model {
+# 	id: ID!
+# }
+
+# 视频
+# 视频是model. 前期主要是外链
+type Video @model {
+	id: ID!
+	name: String!
+	brief: String
+	url: String!
+	preview: Picture
+	author: User @connection(name: "UserVideo")
+}
+
+
+# ======================= 用来存储图片，bp之类的
+type Picture {
+	name: String
+	image: S3Object!
+	preview: S3Object
+}
+
+# 生成preview 需要后台自动
+type S3Object {
+	bucket: String!
+	region: String!
+	key: String!
+}
+
+# ======================= 暂时不用
+# mentor, normal,
+# type Role @model {
+#     id: ID!
+#     permissions: [String!]
+#     #fk
+#     users: [User] @connection(name: "UserRole")
+# }
+
+# type Blog @model {
+#   id: ID!
+#   name: String!
+#   posts: [Post] @connection(keyName: "byBlog", fields: ["id"])
+# }
+
+# type Post @model @key(name: "byBlog", fields: ["blogID"]) {
+#   id: ID!
+#   title: String!
+#   blogID: ID!
+#   blog: Blog @connection(fields: ["blogID"])
+#   comments: [Comment] @connection(keyName: "byPost", fields: ["id"])
+# }
+
+# type Comment @model @key(name: "byPost", fields: ["postID", "content"]) {
+#   id: ID!
+#   postID: ID!
+#   post: Post @connection(fields: ["postID"])
+#   content: String!
+# }
