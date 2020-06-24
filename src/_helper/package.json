@@ -2,5 +2,5 @@
   "name": "_helper",
   "version": "0.0.0",
   "private": true,
-  "main": "./_helper.js"
+  "main": "./_helper.tsx"
 }

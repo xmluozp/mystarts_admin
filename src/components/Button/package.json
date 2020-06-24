@@ -2,6 +2,6 @@
     "name": "ComButton",
     "version": "0.0.0",
     "private": true,
-    "main": "./ComButton.js"
+    "main": "./ComButton.tsx"
   }
   

@@ -2,5 +2,5 @@
   "name": "_redux_actions",
   "version": "0.0.0",
   "private": true,
-  "main": "./_redux_actions.js"
+  "main": "./_redux_actions.tsx"
 }

@@ -3,12 +3,42 @@ import React, { useState } from "react"
 // test2
 import { connect } from "react-redux"
 
+// test3: amplify add a tag
+import { API, graphqlOperation } from "aws-amplify"
+import {createTag} from 'graphql/mutations'
+
 /** ==========================================================================
  * THIS PAGE: view component
  */
 const TestView = ({ handleOnClick, ...props }) => {
-	return <Test2_redux handleOnClick={handleOnClick} />
+	return <Test3 />
 }
+
+
+const Test3 = () => {
+
+	// test3: amplify add a tag
+	const handleAddTag = async () => {
+		try {
+			const input = {
+				name: "test_category",
+				isActive: true
+			}
+
+			const result = await API.graphql(
+				graphqlOperation(createTag, { input: input })
+			)
+			console.log({ result })
+			console.info(`Created : id ${result.data.createTag.id}`)
+
+		} catch (error) {
+			console.error("Error", error)
+		}
+	}
+
+	return <button onClick={handleAddTag}>测试添加tag</button>
+}
+
 
 // ==================================
 
@@ -26,6 +56,8 @@ const Test1 = ({ handleOnClick, ...props }) => {
 		hoctestIn: 0,
 	})
 
+
+
 	return (
 		<div>
 			<hr />
@@ -36,6 +68,7 @@ const Test1 = ({ handleOnClick, ...props }) => {
 			<hr />
 			<button onClick={handleOnClick}>调用main组件方法</button>
 			<hr />
+			
 			<button
 				onClick={() => {
 					setstate({ ...state, hoctest: state.hoctest + 1 })

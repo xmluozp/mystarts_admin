@@ -5,14 +5,20 @@ import './polyfill'
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'assets/scss/index.scss';
-import App from './App';
+import App from './App.tsx';
 import * as serviceWorker from './serviceWorker';
+
+//=========================================================Amplify
+import Amplify from 'aws-amplify'
+import aws_exports from './aws-exports'
+//=========================================================Amplify
 
 //=========================================================REDUX
 import { Provider } from 'react-redux'; 
 import helper from './_helper';
-
 //=========================================================REDUX
+
+Amplify.configure(aws_exports)
 
 ReactDOM.render(
   <React.StrictMode>

@@ -2,5 +2,5 @@
   "name": "_redux_constants",
   "version": "0.0.0",
   "private": true,
-  "main": "./_redux_constants.js"
+  "main": "./_redux_constants.tsx"
 }

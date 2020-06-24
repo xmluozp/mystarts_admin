@@ -1,5 +1,5 @@
 {
-  "name": "myroadshow_client",
+  "name": "mystarts_admin",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -9,6 +9,9 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "@types/react-redux": "^7.1.9",
+    "@types/react-router-dom": "^5.1.5",
+    "@types/styled-components": "^5.1.0",
     "aws-amplify": "^3.0.18",
     "aws-amplify-react": "^4.1.17",
     "element-react": "^1.4.34",
@@ -27,11 +30,13 @@
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
-    "styled-components": "^5.1.1"
+    "styled-components": "^5.1.1",
+    "typescript": "^3.9.5"
   },
   "scripts": {
     "start": "npm run build && node server.js",
     "demo": "react-scripts start",
+    "migration": "amplify api gql-compile",
     "deploy": "npm run build && git push heroku master",
     "push": "git push -u origin master",
     "build": "react-scripts build",

@@ -1,3 +1,10 @@
+type MyType @model {
+	id: ID!
+	title: String!
+	content: String!
+	price: Int
+	rating: Float
+}
 # @auth(rules: [{allow:owner, operations: [create,update,delete]}])
 
 # ========================================= user
@@ -22,13 +29,12 @@ type User
 	fullName: String
 	email: String!
 	avatar: Picture #强行规定大小，就不用担心preview，节省空间成本
-	organizations: [UserOrganization] @connection(name: "byUser")
-	conversations: [ConversationUser] @connection(name: "byUserConv")
+	organizations: [UserOrganization] @connection(name: "UserOrg")
+	conversations: [ConversationUser] @connection(name: "UserConv")
 	messages: [Message] @connection(name: "UserMessages")
 	videos: [Video] @connection(name: "UserVideo", sortField: "createdAt")
 	friends: [User] @connection
 	watchs: [User] @connection
-	# TODO: friends
 }
 
 # 组织
@@ -46,19 +52,17 @@ type Organization @model {
 	logo: Picture
 	bp: S3Object
 	tags: [String] # 可以手动输入
-	members: [UserOrganization] @connection(keyName: "byOrg", fields: ["id"])
+	members: [UserOrganization] @connection(name: "OrgUser")
 }
 
 # m2m
 type UserOrganization
-	@model(queries: null)
-	@key(name: "byUser", fields: ["userID", "organizationID"])
-	@key(name: "byOrg", fields: ["organizationID", "userID"]) {
+	@model(queries: null) {
 	id: ID!
 	userID: ID!
-	user: User! @connection(fields: ["userID"])
+	user: User! @connection(name: "UserOrg")
 	organizationID: ID!
-	organization: Organization! @connection(field: ["organizationID"])
+	organization: Organization! @connection(name: "OrgUser")
 }
 
 # Tag是搜索用的，纯文本，这个仅作为下拉列表管理用
@@ -82,34 +86,33 @@ type Conversation
 	@auth(rules: [{ allow: owner, ownerField: "members" }]) {
 	id: ID!
 	messages: [Message] @connection(name: "ConvoMsgs", sortField: "createdAt")
-	users: [ConversationUser] @connection(name: "byConvUser")
+	users: [ConversationUser] @connection(name: "ConvUser")
 
-	# set owners
+	# used to set auth
 	members: [String!]!
 }
 
-#
+# #
 type Message
 	@model(subscriptions: null, queries: null)
 	@auth(rules: [{ allow: owner, ownerField: "authorId" }]) {
 	id: ID!
 	content: String!
-	authorId: String
+	authorId: String!
 	author: User @connection(name: "UserMessages", keyField: "authorId")
 	messageConversationId: ID!
 	conversation: Conversation! @connection(name: "ConvoMsgs")
+	createdAt: AWSDateTime!
 }
 
 # m2m
 type ConversationUser
-	@model(queries: null)
-	@key(name: "byUserConv", fields: ["userID", "conversationID"])
-	@key(name: "byConvUser", fields: ["conversationID", "userID"]) {
+	@model(queries: null) {
 	id: ID!
 	userID: ID!
-	user: User! @connection(fields: ["userID"])
+	user: User! @connection(name: "UserConv")
 	conversationID: ID!
-	conversation: Conversation! @connection(fields: ["conversationID"])
+	conversation: Conversation! @connection(name: "ConvUser")
 }
 
 # type Subscription {
@@ -127,13 +130,14 @@ type Notification @model {
 	action: String! # message, follow, newevent
 	receiverID: ID!
 	receiver: User! @connection(fields: ["receiverID"])
-	senderID: ID	
-	sender: User @connection(fields: ["senderID"]) # who triggers the notification
+	sender: User @connection # who triggers the notification
 	isRead: Boolean # move to redis later
 }
 
 # type NotificationSubscribe @model {
 # 	id: ID!
+# 	action: String
+# 	user: User
 # }
 
 # 视频
@@ -145,6 +149,7 @@ type Video @model {
 	url: String!
 	preview: Picture
 	author: User @connection(name: "UserVideo")
+	createdAt: AWSDateTime!
 }
 
 

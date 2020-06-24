@@ -1,6 +1,6 @@
 {
 	"auth": {
-		"mystartsadmin668f1b99": {
+		"mystartsadmin82af1fe0": {
 			"service": "Cognito",
 			"providerPlugin": "awscloudformation",
 			"dependsOn": []
@@ -16,7 +16,7 @@
 					"defaultAuthentication": {
 						"authenticationType": "AMAZON_COGNITO_USER_POOLS",
 						"userPoolConfig": {
-							"userPoolId": "authmystartsadmin668f1b99"
+							"userPoolId": "authmystartsadmin82af1fe0"
 						}
 					}
 				}
