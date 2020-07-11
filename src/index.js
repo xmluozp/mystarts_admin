@@ -10,6 +10,7 @@ import * as serviceWorker from './serviceWorker';
 
 //=========================================================Amplify
 import Amplify from 'aws-amplify'
+import "element-theme-default";
 import aws_exports from './aws-exports'
 //=========================================================Amplify
 

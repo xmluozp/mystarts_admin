@@ -36,7 +36,22 @@ const Test3 = () => {
 		}
 	}
 
-	return <button onClick={handleAddTag}>测试添加tag</button>
+	const handleTestLambda = async () => {
+		try {
+			let options = {
+				headers: {} // OPTIONAL
+			  }
+
+			const result = await API.get('mystartslambda', '/item', options)
+	
+			console.log("后端返回", result)	
+		} catch (error) {
+			
+		}
+
+	}
+
+	return <button onClick={handleTestLambda}>测试添加tag</button>
 }
 
 

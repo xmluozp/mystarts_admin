@@ -1,0 +1,7 @@
+{
+    "name": "ComLoading",
+    "version": "0.0.0",
+    "private": true,
+    "main": "./ComLoading.tsx"
+  }
+  

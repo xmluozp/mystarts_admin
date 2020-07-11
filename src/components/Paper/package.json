@@ -1,0 +1,7 @@
+{
+    "name": "ComPaper",
+    "version": "0.0.0",
+    "private": true,
+    "main": "./ComPaper.tsx"
+  }
+  

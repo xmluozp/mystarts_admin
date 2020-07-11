@@ -9,6 +9,7 @@ import Hub from 'hub'
  * Redux things
  */
 
+
 function App() {
   return <Hub/>
 }

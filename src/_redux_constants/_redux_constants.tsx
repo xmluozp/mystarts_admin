@@ -32,4 +32,7 @@ export const LOADING = {
 
 
 // -------------------------
+export const TAG = maker("TAG")
+export const VOTETOPIC = maker("VOTETOPIC")
+
 

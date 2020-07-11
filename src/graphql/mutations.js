@@ -1,75 +1,168 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createMyType = /* GraphQL */ `
-  mutation CreateMyType(
-    $input: CreateMyTypeInput!
-    $condition: ModelMyTypeConditionInput
+export const createTablecount = /* GraphQL */ `
+  mutation CreateTablecount(
+    $input: CreateTablecountInput!
+    $condition: ModelTablecountConditionInput
   ) {
-    createMyType(input: $input, condition: $condition) {
-      id
-      title
-      content
-      price
-      rating
+    createTablecount(input: $input, condition: $condition) {
+      tableName
+      filter
+      count
       createdAt
       updatedAt
     }
   }
 `;
-export const updateMyType = /* GraphQL */ `
-  mutation UpdateMyType(
-    $input: UpdateMyTypeInput!
-    $condition: ModelMyTypeConditionInput
+export const updateTablecount = /* GraphQL */ `
+  mutation UpdateTablecount(
+    $input: UpdateTablecountInput!
+    $condition: ModelTablecountConditionInput
   ) {
-    updateMyType(input: $input, condition: $condition) {
-      id
-      title
-      content
-      price
-      rating
+    updateTablecount(input: $input, condition: $condition) {
+      tableName
+      filter
+      count
       createdAt
       updatedAt
     }
   }
 `;
-export const deleteMyType = /* GraphQL */ `
-  mutation DeleteMyType(
-    $input: DeleteMyTypeInput!
-    $condition: ModelMyTypeConditionInput
+export const deleteTablecount = /* GraphQL */ `
+  mutation DeleteTablecount(
+    $input: DeleteTablecountInput!
+    $condition: ModelTablecountConditionInput
   ) {
-    deleteMyType(input: $input, condition: $condition) {
-      id
-      title
-      content
-      price
-      rating
+    deleteTablecount(input: $input, condition: $condition) {
+      tableName
+      filter
+      count
       createdAt
       updatedAt
     }
   }
 `;
-export const createInvitation = /* GraphQL */ `
-  mutation CreateInvitation(
-    $input: CreateInvitationInput!
-    $condition: ModelinvitationConditionInput
+export const createVotetopic = /* GraphQL */ `
+  mutation CreateVotetopic(
+    $input: CreateVotetopicInput!
+    $condition: ModelVotetopicConditionInput
   ) {
-    createInvitation(input: $input, condition: $condition) {
+    createVotetopic(input: $input, condition: $condition) {
       id
-      dafaultFriends {
+      title
+      description
+      type
+      createdAt
+      updatedAt
+      voteitems {
         items {
           id
-          fullName
-          email
+          title
+          isActive
+          type
           createdAt
           updatedAt
         }
         nextToken
       }
-      fromUser {
+    }
+  }
+`;
+export const deleteVotetopic = /* GraphQL */ `
+  mutation DeleteVotetopic(
+    $input: DeleteVotetopicInput!
+    $condition: ModelVotetopicConditionInput
+  ) {
+    deleteVotetopic(input: $input, condition: $condition) {
+      id
+      title
+      description
+      type
+      createdAt
+      updatedAt
+      voteitems {
+        items {
+          id
+          title
+          isActive
+          type
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const updateVoteitem = /* GraphQL */ `
+  mutation UpdateVoteitem(
+    $input: UpdateVoteitemInput!
+    $condition: ModelVoteitemConditionInput
+  ) {
+    updateVoteitem(input: $input, condition: $condition) {
+      id
+      title
+      isActive
+      type
+      createdAt
+      updatedAt
+      votetopic {
         id
-        fullName
+        title
+        description
+        type
+        createdAt
+        updatedAt
+        voteitems {
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const deleteVoteitem = /* GraphQL */ `
+  mutation DeleteVoteitem(
+    $input: DeleteVoteitemInput!
+    $condition: ModelVoteitemConditionInput
+  ) {
+    deleteVoteitem(input: $input, condition: $condition) {
+      id
+      title
+      isActive
+      type
+      createdAt
+      updatedAt
+      votetopic {
+        id
+        title
+        description
+        type
+        createdAt
+        updatedAt
+        voteitems {
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const createUserBallot = /* GraphQL */ `
+  mutation CreateUserBallot(
+    $input: CreateUserBallotInput!
+    $condition: ModelUserBallotConditionInput
+  ) {
+    createUserBallot(input: $input, condition: $condition) {
+      id
+      userID
+      PollitemID
+      createdAt
+      updatedAt
+      user {
+        id
         email
+        familyName
+        givenName
         avatar {
           name
         }
@@ -79,21 +172,195 @@ export const createInvitation = /* GraphQL */ `
         conversations {
           nextToken
         }
-        messages {
+        pollitems {
           nextToken
         }
         videos {
           nextToken
         }
+        createdAt
+        updatedAt
         friends {
           nextToken
         }
         watchs {
           nextToken
         }
+        messages {
+          nextToken
+        }
+      }
+      Pollitem {
+        id
+        title
+        votecount
+        fixcount
+        isSuggestion
+        users {
+          nextToken
+        }
+        type
+        sortNumber
         createdAt
         updatedAt
+        polltopic {
+          id
+          title
+          description
+          type
+          sortNumber
+          createdAt
+          updatedAt
+        }
       }
+    }
+  }
+`;
+export const updateUserBallot = /* GraphQL */ `
+  mutation UpdateUserBallot(
+    $input: UpdateUserBallotInput!
+    $condition: ModelUserBallotConditionInput
+  ) {
+    updateUserBallot(input: $input, condition: $condition) {
+      id
+      userID
+      PollitemID
+      createdAt
+      updatedAt
+      user {
+        id
+        email
+        familyName
+        givenName
+        avatar {
+          name
+        }
+        organizations {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        pollitems {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        friends {
+          nextToken
+        }
+        watchs {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+      }
+      Pollitem {
+        id
+        title
+        votecount
+        fixcount
+        isSuggestion
+        users {
+          nextToken
+        }
+        type
+        sortNumber
+        createdAt
+        updatedAt
+        polltopic {
+          id
+          title
+          description
+          type
+          sortNumber
+          createdAt
+          updatedAt
+        }
+      }
+    }
+  }
+`;
+export const deleteUserBallot = /* GraphQL */ `
+  mutation DeleteUserBallot(
+    $input: DeleteUserBallotInput!
+    $condition: ModelUserBallotConditionInput
+  ) {
+    deleteUserBallot(input: $input, condition: $condition) {
+      id
+      userID
+      PollitemID
+      createdAt
+      updatedAt
+      user {
+        id
+        email
+        familyName
+        givenName
+        avatar {
+          name
+        }
+        organizations {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        pollitems {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        friends {
+          nextToken
+        }
+        watchs {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+      }
+      Pollitem {
+        id
+        title
+        votecount
+        fixcount
+        isSuggestion
+        users {
+          nextToken
+        }
+        type
+        sortNumber
+        createdAt
+        updatedAt
+        polltopic {
+          id
+          title
+          description
+          type
+          sortNumber
+          createdAt
+          updatedAt
+        }
+      }
+    }
+  }
+`;
+export const createInvitation = /* GraphQL */ `
+  mutation CreateInvitation(
+    $input: CreateInvitationInput!
+    $condition: ModelInvitationConditionInput
+  ) {
+    createInvitation(input: $input, condition: $condition) {
+      id
       inviteToken
       createdAt
       updatedAt
@@ -103,48 +370,10 @@ export const createInvitation = /* GraphQL */ `
 export const updateInvitation = /* GraphQL */ `
   mutation UpdateInvitation(
     $input: UpdateInvitationInput!
-    $condition: ModelinvitationConditionInput
+    $condition: ModelInvitationConditionInput
   ) {
     updateInvitation(input: $input, condition: $condition) {
       id
-      dafaultFriends {
-        items {
-          id
-          fullName
-          email
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      fromUser {
-        id
-        fullName
-        email
-        avatar {
-          name
-        }
-        organizations {
-          nextToken
-        }
-        conversations {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        videos {
-          nextToken
-        }
-        friends {
-          nextToken
-        }
-        watchs {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
       inviteToken
       createdAt
       updatedAt
@@ -154,316 +383,11 @@ export const updateInvitation = /* GraphQL */ `
 export const deleteInvitation = /* GraphQL */ `
   mutation DeleteInvitation(
     $input: DeleteInvitationInput!
-    $condition: ModelinvitationConditionInput
+    $condition: ModelInvitationConditionInput
   ) {
     deleteInvitation(input: $input, condition: $condition) {
       id
-      dafaultFriends {
-        items {
-          id
-          fullName
-          email
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      fromUser {
-        id
-        fullName
-        email
-        avatar {
-          name
-        }
-        organizations {
-          nextToken
-        }
-        conversations {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        videos {
-          nextToken
-        }
-        friends {
-          nextToken
-        }
-        watchs {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
       inviteToken
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const createUser = /* GraphQL */ `
-  mutation CreateUser(
-    $input: CreateUserInput!
-    $condition: ModelUserConditionInput
-  ) {
-    createUser(input: $input, condition: $condition) {
-      id
-      fullName
-      email
-      avatar {
-        name
-        image {
-          bucket
-          region
-          key
-        }
-        preview {
-          bucket
-          region
-          key
-        }
-      }
-      organizations {
-        items {
-          id
-          userID
-          organizationID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      conversations {
-        items {
-          id
-          userID
-          conversationID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      messages {
-        items {
-          id
-          content
-          authorId
-          messageConversationId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      videos {
-        items {
-          id
-          name
-          brief
-          url
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      friends {
-        items {
-          id
-          fullName
-          email
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      watchs {
-        items {
-          id
-          fullName
-          email
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateUser = /* GraphQL */ `
-  mutation UpdateUser(
-    $input: UpdateUserInput!
-    $condition: ModelUserConditionInput
-  ) {
-    updateUser(input: $input, condition: $condition) {
-      id
-      fullName
-      email
-      avatar {
-        name
-        image {
-          bucket
-          region
-          key
-        }
-        preview {
-          bucket
-          region
-          key
-        }
-      }
-      organizations {
-        items {
-          id
-          userID
-          organizationID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      conversations {
-        items {
-          id
-          userID
-          conversationID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      messages {
-        items {
-          id
-          content
-          authorId
-          messageConversationId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      videos {
-        items {
-          id
-          name
-          brief
-          url
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      friends {
-        items {
-          id
-          fullName
-          email
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      watchs {
-        items {
-          id
-          fullName
-          email
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteUser = /* GraphQL */ `
-  mutation DeleteUser(
-    $input: DeleteUserInput!
-    $condition: ModelUserConditionInput
-  ) {
-    deleteUser(input: $input, condition: $condition) {
-      id
-      fullName
-      email
-      avatar {
-        name
-        image {
-          bucket
-          region
-          key
-        }
-        preview {
-          bucket
-          region
-          key
-        }
-      }
-      organizations {
-        items {
-          id
-          userID
-          organizationID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      conversations {
-        items {
-          id
-          userID
-          conversationID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      messages {
-        items {
-          id
-          content
-          authorId
-          messageConversationId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      videos {
-        items {
-          id
-          name
-          brief
-          url
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      friends {
-        items {
-          id
-          fullName
-          email
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      watchs {
-        items {
-          id
-          fullName
-          email
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -606,34 +530,6 @@ export const createUserOrganization = /* GraphQL */ `
     createUserOrganization(input: $input, condition: $condition) {
       id
       userID
-      user {
-        id
-        fullName
-        email
-        avatar {
-          name
-        }
-        organizations {
-          nextToken
-        }
-        conversations {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        videos {
-          nextToken
-        }
-        friends {
-          nextToken
-        }
-        watchs {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
       organizationID
       organization {
         id
@@ -656,6 +552,38 @@ export const createUserOrganization = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      user {
+        id
+        email
+        familyName
+        givenName
+        avatar {
+          name
+        }
+        organizations {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        pollitems {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        friends {
+          nextToken
+        }
+        watchs {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+      }
     }
   }
 `;
@@ -667,34 +595,6 @@ export const updateUserOrganization = /* GraphQL */ `
     updateUserOrganization(input: $input, condition: $condition) {
       id
       userID
-      user {
-        id
-        fullName
-        email
-        avatar {
-          name
-        }
-        organizations {
-          nextToken
-        }
-        conversations {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        videos {
-          nextToken
-        }
-        friends {
-          nextToken
-        }
-        watchs {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
       organizationID
       organization {
         id
@@ -717,6 +617,38 @@ export const updateUserOrganization = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      user {
+        id
+        email
+        familyName
+        givenName
+        avatar {
+          name
+        }
+        organizations {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        pollitems {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        friends {
+          nextToken
+        }
+        watchs {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+      }
     }
   }
 `;
@@ -728,34 +660,6 @@ export const deleteUserOrganization = /* GraphQL */ `
     deleteUserOrganization(input: $input, condition: $condition) {
       id
       userID
-      user {
-        id
-        fullName
-        email
-        avatar {
-          name
-        }
-        organizations {
-          nextToken
-        }
-        conversations {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        videos {
-          nextToken
-        }
-        friends {
-          nextToken
-        }
-        watchs {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
       organizationID
       organization {
         id
@@ -778,6 +682,38 @@ export const deleteUserOrganization = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      user {
+        id
+        email
+        familyName
+        givenName
+        avatar {
+          name
+        }
+        organizations {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        pollitems {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        friends {
+          nextToken
+        }
+        watchs {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+      }
     }
   }
 `;
@@ -823,205 +759,6 @@ export const deleteTag = /* GraphQL */ `
     }
   }
 `;
-export const createConvo = /* GraphQL */ `
-  mutation CreateConvo(
-    $input: CreateConversationInput!
-    $condition: ModelConversationConditionInput
-  ) {
-    createConvo(input: $input, condition: $condition) {
-      id
-      messages {
-        items {
-          id
-          content
-          authorId
-          messageConversationId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      users {
-        items {
-          id
-          userID
-          conversationID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      members
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const createMessage = /* GraphQL */ `
-  mutation CreateMessage(
-    $input: CreateMessageInput!
-    $condition: ModelMessageConditionInput
-  ) {
-    createMessage(input: $input, condition: $condition) {
-      id
-      content
-      authorId
-      author {
-        id
-        fullName
-        email
-        avatar {
-          name
-        }
-        organizations {
-          nextToken
-        }
-        conversations {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        videos {
-          nextToken
-        }
-        friends {
-          nextToken
-        }
-        watchs {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      messageConversationId
-      conversation {
-        id
-        messages {
-          nextToken
-        }
-        users {
-          nextToken
-        }
-        members
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateMessage = /* GraphQL */ `
-  mutation UpdateMessage(
-    $input: UpdateMessageInput!
-    $condition: ModelMessageConditionInput
-  ) {
-    updateMessage(input: $input, condition: $condition) {
-      id
-      content
-      authorId
-      author {
-        id
-        fullName
-        email
-        avatar {
-          name
-        }
-        organizations {
-          nextToken
-        }
-        conversations {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        videos {
-          nextToken
-        }
-        friends {
-          nextToken
-        }
-        watchs {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      messageConversationId
-      conversation {
-        id
-        messages {
-          nextToken
-        }
-        users {
-          nextToken
-        }
-        members
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteMessage = /* GraphQL */ `
-  mutation DeleteMessage(
-    $input: DeleteMessageInput!
-    $condition: ModelMessageConditionInput
-  ) {
-    deleteMessage(input: $input, condition: $condition) {
-      id
-      content
-      authorId
-      author {
-        id
-        fullName
-        email
-        avatar {
-          name
-        }
-        organizations {
-          nextToken
-        }
-        conversations {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        videos {
-          nextToken
-        }
-        friends {
-          nextToken
-        }
-        watchs {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      messageConversationId
-      conversation {
-        id
-        messages {
-          nextToken
-        }
-        users {
-          nextToken
-        }
-        members
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const createConversationUser = /* GraphQL */ `
   mutation CreateConversationUser(
     $input: CreateConversationUserInput!
@@ -1030,10 +767,14 @@ export const createConversationUser = /* GraphQL */ `
     createConversationUser(input: $input, condition: $condition) {
       id
       userID
+      conversationID
+      createdAt
+      updatedAt
       user {
         id
-        fullName
         email
+        familyName
+        givenName
         avatar {
           name
         }
@@ -1043,36 +784,36 @@ export const createConversationUser = /* GraphQL */ `
         conversations {
           nextToken
         }
-        messages {
+        pollitems {
           nextToken
         }
         videos {
           nextToken
         }
+        createdAt
+        updatedAt
         friends {
           nextToken
         }
         watchs {
           nextToken
         }
-        createdAt
-        updatedAt
-      }
-      conversationID
-      conversation {
-        id
         messages {
           nextToken
         }
+      }
+      conversation {
+        id
         users {
           nextToken
         }
         members
         createdAt
         updatedAt
+        messages {
+          nextToken
+        }
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -1084,10 +825,14 @@ export const updateConversationUser = /* GraphQL */ `
     updateConversationUser(input: $input, condition: $condition) {
       id
       userID
+      conversationID
+      createdAt
+      updatedAt
       user {
         id
-        fullName
         email
+        familyName
+        givenName
         avatar {
           name
         }
@@ -1097,36 +842,36 @@ export const updateConversationUser = /* GraphQL */ `
         conversations {
           nextToken
         }
-        messages {
+        pollitems {
           nextToken
         }
         videos {
           nextToken
         }
+        createdAt
+        updatedAt
         friends {
           nextToken
         }
         watchs {
           nextToken
         }
-        createdAt
-        updatedAt
-      }
-      conversationID
-      conversation {
-        id
         messages {
           nextToken
         }
+      }
+      conversation {
+        id
         users {
           nextToken
         }
         members
         createdAt
         updatedAt
+        messages {
+          nextToken
+        }
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -1138,10 +883,14 @@ export const deleteConversationUser = /* GraphQL */ `
     deleteConversationUser(input: $input, condition: $condition) {
       id
       userID
+      conversationID
+      createdAt
+      updatedAt
       user {
         id
-        fullName
         email
+        familyName
+        givenName
         avatar {
           name
         }
@@ -1151,36 +900,36 @@ export const deleteConversationUser = /* GraphQL */ `
         conversations {
           nextToken
         }
-        messages {
+        pollitems {
           nextToken
         }
         videos {
           nextToken
         }
+        createdAt
+        updatedAt
         friends {
           nextToken
         }
         watchs {
           nextToken
         }
-        createdAt
-        updatedAt
-      }
-      conversationID
-      conversation {
-        id
         messages {
           nextToken
         }
+      }
+      conversation {
+        id
         users {
           nextToken
         }
         members
         createdAt
         updatedAt
+        messages {
+          nextToken
+        }
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -1195,65 +944,73 @@ export const createNotification = /* GraphQL */ `
       type
       action
       receiverID
-      receiver {
-        id
-        fullName
-        email
-        avatar {
-          name
-        }
-        organizations {
-          nextToken
-        }
-        conversations {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        videos {
-          nextToken
-        }
-        friends {
-          nextToken
-        }
-        watchs {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      sender {
-        id
-        fullName
-        email
-        avatar {
-          name
-        }
-        organizations {
-          nextToken
-        }
-        conversations {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        videos {
-          nextToken
-        }
-        friends {
-          nextToken
-        }
-        watchs {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
       isRead
       createdAt
       updatedAt
+      receiver {
+        id
+        email
+        familyName
+        givenName
+        avatar {
+          name
+        }
+        organizations {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        pollitems {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        friends {
+          nextToken
+        }
+        watchs {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+      }
+      sender {
+        id
+        email
+        familyName
+        givenName
+        avatar {
+          name
+        }
+        organizations {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        pollitems {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        friends {
+          nextToken
+        }
+        watchs {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+      }
     }
   }
 `;
@@ -1268,65 +1025,73 @@ export const updateNotification = /* GraphQL */ `
       type
       action
       receiverID
-      receiver {
-        id
-        fullName
-        email
-        avatar {
-          name
-        }
-        organizations {
-          nextToken
-        }
-        conversations {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        videos {
-          nextToken
-        }
-        friends {
-          nextToken
-        }
-        watchs {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      sender {
-        id
-        fullName
-        email
-        avatar {
-          name
-        }
-        organizations {
-          nextToken
-        }
-        conversations {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        videos {
-          nextToken
-        }
-        friends {
-          nextToken
-        }
-        watchs {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
       isRead
       createdAt
       updatedAt
+      receiver {
+        id
+        email
+        familyName
+        givenName
+        avatar {
+          name
+        }
+        organizations {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        pollitems {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        friends {
+          nextToken
+        }
+        watchs {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+      }
+      sender {
+        id
+        email
+        familyName
+        givenName
+        avatar {
+          name
+        }
+        organizations {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        pollitems {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        friends {
+          nextToken
+        }
+        watchs {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+      }
     }
   }
 `;
@@ -1341,65 +1106,73 @@ export const deleteNotification = /* GraphQL */ `
       type
       action
       receiverID
-      receiver {
-        id
-        fullName
-        email
-        avatar {
-          name
-        }
-        organizations {
-          nextToken
-        }
-        conversations {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        videos {
-          nextToken
-        }
-        friends {
-          nextToken
-        }
-        watchs {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      sender {
-        id
-        fullName
-        email
-        avatar {
-          name
-        }
-        organizations {
-          nextToken
-        }
-        conversations {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        videos {
-          nextToken
-        }
-        friends {
-          nextToken
-        }
-        watchs {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
       isRead
       createdAt
       updatedAt
+      receiver {
+        id
+        email
+        familyName
+        givenName
+        avatar {
+          name
+        }
+        organizations {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        pollitems {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        friends {
+          nextToken
+        }
+        watchs {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+      }
+      sender {
+        id
+        email
+        familyName
+        givenName
+        avatar {
+          name
+        }
+        organizations {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        pollitems {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        friends {
+          nextToken
+        }
+        watchs {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+      }
     }
   }
 `;
@@ -1426,10 +1199,13 @@ export const createVideo = /* GraphQL */ `
           key
         }
       }
+      createdAt
+      updatedAt
       author {
         id
-        fullName
         email
+        familyName
+        givenName
         avatar {
           name
         }
@@ -1439,23 +1215,24 @@ export const createVideo = /* GraphQL */ `
         conversations {
           nextToken
         }
-        messages {
+        pollitems {
           nextToken
         }
         videos {
           nextToken
         }
+        createdAt
+        updatedAt
         friends {
           nextToken
         }
         watchs {
           nextToken
         }
-        createdAt
-        updatedAt
+        messages {
+          nextToken
+        }
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -1482,10 +1259,13 @@ export const updateVideo = /* GraphQL */ `
           key
         }
       }
+      createdAt
+      updatedAt
       author {
         id
-        fullName
         email
+        familyName
+        givenName
         avatar {
           name
         }
@@ -1495,23 +1275,24 @@ export const updateVideo = /* GraphQL */ `
         conversations {
           nextToken
         }
-        messages {
+        pollitems {
           nextToken
         }
         videos {
           nextToken
         }
+        createdAt
+        updatedAt
         friends {
           nextToken
         }
         watchs {
           nextToken
         }
-        createdAt
-        updatedAt
+        messages {
+          nextToken
+        }
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -1538,10 +1319,13 @@ export const deleteVideo = /* GraphQL */ `
           key
         }
       }
+      createdAt
+      updatedAt
       author {
         id
-        fullName
         email
+        familyName
+        givenName
         avatar {
           name
         }
@@ -1551,23 +1335,857 @@ export const deleteVideo = /* GraphQL */ `
         conversations {
           nextToken
         }
-        messages {
+        pollitems {
           nextToken
         }
         videos {
           nextToken
         }
+        createdAt
+        updatedAt
         friends {
           nextToken
         }
         watchs {
           nextToken
         }
-        createdAt
-        updatedAt
+        messages {
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const registerUser = /* GraphQL */ `
+  mutation RegisterUser(
+    $input: CreateUserInput!
+    $condition: ModelUserConditionInput
+  ) {
+    registerUser(input: $input, condition: $condition) {
+      id
+      email
+      familyName
+      givenName
+      avatar {
+        name
+        image {
+          bucket
+          region
+          key
+        }
+        preview {
+          bucket
+          region
+          key
+        }
+      }
+      organizations {
+        items {
+          id
+          userID
+          organizationID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      conversations {
+        items {
+          id
+          userID
+          conversationID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      pollitems {
+        items {
+          id
+          userID
+          PollitemID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      videos {
+        items {
+          id
+          name
+          brief
+          url
+          createdAt
+          updatedAt
+        }
+        nextToken
       }
       createdAt
       updatedAt
+      friends {
+        items {
+          id
+          email
+          familyName
+          givenName
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      watchs {
+        items {
+          id
+          email
+          familyName
+          givenName
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          content
+          authorId
+          messageConversationId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const updateUser = /* GraphQL */ `
+  mutation UpdateUser(
+    $input: UpdateUserInput!
+    $condition: ModelUserConditionInput
+  ) {
+    updateUser(input: $input, condition: $condition) {
+      id
+      email
+      familyName
+      givenName
+      avatar {
+        name
+        image {
+          bucket
+          region
+          key
+        }
+        preview {
+          bucket
+          region
+          key
+        }
+      }
+      organizations {
+        items {
+          id
+          userID
+          organizationID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      conversations {
+        items {
+          id
+          userID
+          conversationID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      pollitems {
+        items {
+          id
+          userID
+          PollitemID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      videos {
+        items {
+          id
+          name
+          brief
+          url
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      friends {
+        items {
+          id
+          email
+          familyName
+          givenName
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      watchs {
+        items {
+          id
+          email
+          familyName
+          givenName
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          content
+          authorId
+          messageConversationId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const updateVotetopic = /* GraphQL */ `
+  mutation UpdateVotetopic(
+    $input: UpdateVotetopicInput!
+    $condition: ModelVotetopicConditionInput
+  ) {
+    updateVotetopic(input: $input, condition: $condition) {
+      id
+      title
+      description
+      type
+      createdAt
+      updatedAt
+      voteitems {
+        items {
+          id
+          title
+          isActive
+          type
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const createVoteitem = /* GraphQL */ `
+  mutation CreateVoteitem(
+    $input: CreateVoteitemInput!
+    $condition: ModelVoteitemConditionInput
+  ) {
+    createVoteitem(input: $input, condition: $condition) {
+      id
+      title
+      isActive
+      type
+      createdAt
+      updatedAt
+      votetopic {
+        id
+        title
+        description
+        type
+        createdAt
+        updatedAt
+        voteitems {
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const createPollperiod = /* GraphQL */ `
+  mutation CreatePollperiod(
+    $input: CreatePollperiodInput!
+    $condition: ModelPollperiodConditionInput
+  ) {
+    createPollperiod(input: $input, condition: $condition) {
+      id
+      title
+      description
+      fromDate
+      toDate
+      type
+      createdAt
+      updatedAt
+      polltopics {
+        items {
+          id
+          title
+          description
+          type
+          sortNumber
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const updatePollperiod = /* GraphQL */ `
+  mutation UpdatePollperiod(
+    $input: UpdatePollperiodInput!
+    $condition: ModelPollperiodConditionInput
+  ) {
+    updatePollperiod(input: $input, condition: $condition) {
+      id
+      title
+      description
+      fromDate
+      toDate
+      type
+      createdAt
+      updatedAt
+      polltopics {
+        items {
+          id
+          title
+          description
+          type
+          sortNumber
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const deletePollperiod = /* GraphQL */ `
+  mutation DeletePollperiod(
+    $input: DeletePollperiodInput!
+    $condition: ModelPollperiodConditionInput
+  ) {
+    deletePollperiod(input: $input, condition: $condition) {
+      id
+      title
+      description
+      fromDate
+      toDate
+      type
+      createdAt
+      updatedAt
+      polltopics {
+        items {
+          id
+          title
+          description
+          type
+          sortNumber
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const createPolltopic = /* GraphQL */ `
+  mutation CreatePolltopic(
+    $input: CreatePolltopicInput!
+    $condition: ModelPolltopicConditionInput
+  ) {
+    createPolltopic(input: $input, condition: $condition) {
+      id
+      title
+      description
+      type
+      sortNumber
+      createdAt
+      updatedAt
+      pollperiod {
+        id
+        title
+        description
+        fromDate
+        toDate
+        type
+        createdAt
+        updatedAt
+        polltopics {
+          nextToken
+        }
+      }
+      pollitems {
+        items {
+          id
+          title
+          votecount
+          fixcount
+          isSuggestion
+          type
+          sortNumber
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const updatePolltopic = /* GraphQL */ `
+  mutation UpdatePolltopic(
+    $input: UpdatePolltopicInput!
+    $condition: ModelPolltopicConditionInput
+  ) {
+    updatePolltopic(input: $input, condition: $condition) {
+      id
+      title
+      description
+      type
+      sortNumber
+      createdAt
+      updatedAt
+      pollperiod {
+        id
+        title
+        description
+        fromDate
+        toDate
+        type
+        createdAt
+        updatedAt
+        polltopics {
+          nextToken
+        }
+      }
+      pollitems {
+        items {
+          id
+          title
+          votecount
+          fixcount
+          isSuggestion
+          type
+          sortNumber
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const deletePolltopic = /* GraphQL */ `
+  mutation DeletePolltopic(
+    $input: DeletePolltopicInput!
+    $condition: ModelPolltopicConditionInput
+  ) {
+    deletePolltopic(input: $input, condition: $condition) {
+      id
+      title
+      description
+      type
+      sortNumber
+      createdAt
+      updatedAt
+      pollperiod {
+        id
+        title
+        description
+        fromDate
+        toDate
+        type
+        createdAt
+        updatedAt
+        polltopics {
+          nextToken
+        }
+      }
+      pollitems {
+        items {
+          id
+          title
+          votecount
+          fixcount
+          isSuggestion
+          type
+          sortNumber
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const createPollitem = /* GraphQL */ `
+  mutation CreatePollitem(
+    $input: CreatePollitemInput!
+    $condition: ModelPollitemConditionInput
+  ) {
+    createPollitem(input: $input, condition: $condition) {
+      id
+      title
+      votecount
+      fixcount
+      isSuggestion
+      users {
+        items {
+          id
+          userID
+          PollitemID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      type
+      sortNumber
+      createdAt
+      updatedAt
+      polltopic {
+        id
+        title
+        description
+        type
+        sortNumber
+        createdAt
+        updatedAt
+        pollperiod {
+          id
+          title
+          description
+          fromDate
+          toDate
+          type
+          createdAt
+          updatedAt
+        }
+        pollitems {
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const updatePollitem = /* GraphQL */ `
+  mutation UpdatePollitem(
+    $input: UpdatePollitemInput!
+    $condition: ModelPollitemConditionInput
+  ) {
+    updatePollitem(input: $input, condition: $condition) {
+      id
+      title
+      votecount
+      fixcount
+      isSuggestion
+      users {
+        items {
+          id
+          userID
+          PollitemID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      type
+      sortNumber
+      createdAt
+      updatedAt
+      polltopic {
+        id
+        title
+        description
+        type
+        sortNumber
+        createdAt
+        updatedAt
+        pollperiod {
+          id
+          title
+          description
+          fromDate
+          toDate
+          type
+          createdAt
+          updatedAt
+        }
+        pollitems {
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const deletePollitem = /* GraphQL */ `
+  mutation DeletePollitem(
+    $input: DeletePollitemInput!
+    $condition: ModelPollitemConditionInput
+  ) {
+    deletePollitem(input: $input, condition: $condition) {
+      id
+      title
+      votecount
+      fixcount
+      isSuggestion
+      users {
+        items {
+          id
+          userID
+          PollitemID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      type
+      sortNumber
+      createdAt
+      updatedAt
+      polltopic {
+        id
+        title
+        description
+        type
+        sortNumber
+        createdAt
+        updatedAt
+        pollperiod {
+          id
+          title
+          description
+          fromDate
+          toDate
+          type
+          createdAt
+          updatedAt
+        }
+        pollitems {
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const createConvo = /* GraphQL */ `
+  mutation CreateConvo(
+    $input: CreateConversationInput!
+    $condition: ModelConversationConditionInput
+  ) {
+    createConvo(input: $input, condition: $condition) {
+      id
+      users {
+        items {
+          id
+          userID
+          conversationID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      members
+      createdAt
+      updatedAt
+      messages {
+        items {
+          id
+          content
+          authorId
+          messageConversationId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const createMessage = /* GraphQL */ `
+  mutation CreateMessage(
+    $input: CreateMessageInput!
+    $condition: ModelMessageConditionInput
+  ) {
+    createMessage(input: $input, condition: $condition) {
+      id
+      content
+      authorId
+      messageConversationId
+      createdAt
+      updatedAt
+      author {
+        id
+        email
+        familyName
+        givenName
+        avatar {
+          name
+        }
+        organizations {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        pollitems {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        friends {
+          nextToken
+        }
+        watchs {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+      }
+      conversation {
+        id
+        users {
+          nextToken
+        }
+        members
+        createdAt
+        updatedAt
+        messages {
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const updateMessage = /* GraphQL */ `
+  mutation UpdateMessage(
+    $input: UpdateMessageInput!
+    $condition: ModelMessageConditionInput
+  ) {
+    updateMessage(input: $input, condition: $condition) {
+      id
+      content
+      authorId
+      messageConversationId
+      createdAt
+      updatedAt
+      author {
+        id
+        email
+        familyName
+        givenName
+        avatar {
+          name
+        }
+        organizations {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        pollitems {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        friends {
+          nextToken
+        }
+        watchs {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+      }
+      conversation {
+        id
+        users {
+          nextToken
+        }
+        members
+        createdAt
+        updatedAt
+        messages {
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const deleteMessage = /* GraphQL */ `
+  mutation DeleteMessage(
+    $input: DeleteMessageInput!
+    $condition: ModelMessageConditionInput
+  ) {
+    deleteMessage(input: $input, condition: $condition) {
+      id
+      content
+      authorId
+      messageConversationId
+      createdAt
+      updatedAt
+      author {
+        id
+        email
+        familyName
+        givenName
+        avatar {
+          name
+        }
+        organizations {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        pollitems {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        friends {
+          nextToken
+        }
+        watchs {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+      }
+      conversation {
+        id
+        users {
+          nextToken
+        }
+        members
+        createdAt
+        updatedAt
+        messages {
+          nextToken
+        }
+      }
     }
   }
 `;

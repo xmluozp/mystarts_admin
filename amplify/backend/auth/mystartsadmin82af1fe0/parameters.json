@@ -1,6 +1,6 @@
 {
     "identityPoolName": "mystartsadmin82af1fe0_identitypool_82af1fe0",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "mystar82af1fe0",
     "userPoolName": "mystartsadmin82af1fe0_userpool_82af1fe0",
     "autoVerifiedAttributes": [

@@ -1,0 +1,7 @@
+{
+    "name": "ComTitle",
+    "version": "0.0.0",
+    "private": true,
+    "main": "./ComTitle.tsx"
+  }
+  

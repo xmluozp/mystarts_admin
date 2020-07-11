@@ -1,49 +1,97 @@
 import Brightness5Icon from '@material-ui/icons/Brightness5';
 
 const navs = {
-    items: [
-      {
-        name: '主页',
-        url: '/dashboard',
-        Icon: Brightness5Icon,
-        badge: {
-          variant: 'info',
-          text: 'NEW',
-        },
-      },    
-      {
-        name: '测试',
-        url: '/test',
-        Icon: Brightness5Icon,
-      },    
-      {
-        name: 'Users',
-        url: '/test',
-        Icon: Brightness5Icon,
-      },    
-      {
-        name: 'Organizations',
-        url: '/test',
-        Icon: Brightness5Icon,
-      },    
-      {name: '' },    
-      {
-        name: 'Messages',
-        url: '/test',
-        Icon: Brightness5Icon,
-      },    
-      {
-        name: 'Notifications',
-        url: '/test',
-        Icon: Brightness5Icon,
-      },    
-      {
-        name: 'Videos',
-        url: '/test',
-        Icon: Brightness5Icon,
-      }
-    ]
-    
+  items: [
+    {
+      name: '测试',
+      url: '/test',
+      Icon: Brightness5Icon,
+      auth: "admin"
+    },
+    { name: '' },
+    {
+      name: 'Dashboard',
+      url: '/dashboard',
+      Icon: Brightness5Icon,
+      badge: {
+        variant: 'info',
+        text: 'NEW',
+      },
+      auth: ""
+    },
+    {
+      name: 'Users',
+      url: '/test',
+      Icon: Brightness5Icon,
+      auth: ""
+    },
+    {
+      name: 'Organizations',
+      url: '/test',
+      Icon: Brightness5Icon,
+      auth: ""
+    },
+    { name: '' },
+    {
+      name: 'Vote Topics',
+      url: '/votetopic',
+      Icon: Brightness5Icon,
+      badge: {
+        variant: 'info',
+        text: 'NEW',
+      },
+      auth: ""
+    },
+    {
+      name: 'Poll Periods',
+      url: '/pollperiods',
+      Icon: Brightness5Icon,
+      badge: {
+        variant: 'info',
+        text: 'NEW',
+      },
+      auth: ""
+    },   
+
+    { name: '' },
+    // {
+    //   name: 'Notifications',
+    //   url: '/test',
+    //   Icon: Brightness5Icon,
+    //   auth: "admin"
+    // },
+    // {
+    //   name: 'Videos',
+    //   url: '/test',
+    //   Icon: Brightness5Icon,
+    //   auth: "admin"
+    // },
+    // {
+    //   name: 'Tags',
+    //   url: '/tag',
+    //   Icon: Brightness5Icon,
+    //   auth: "admin"
+    // }, { name: '' },
+    // {
+    //   name: 'Images',
+    //   url: '/test',
+    //   Icon: Brightness5Icon,
+    //   auth: "admin"
+    // },
+    // {
+    //   name: 'Messages',
+    //   url: '/test',
+    //   Icon: Brightness5Icon,
+    //   auth: "admin"
+    // },
+    // {
+    //   name: 'Invitations',
+    //   url: '/test',
+    //   Icon: Brightness5Icon,
+    //   auth: "admin"
+    // }
+  ]
+
 }
 
 export default navs

@@ -1,63 +1,52 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateMyType = /* GraphQL */ `
-  subscription OnCreateMyType {
-    onCreateMyType {
-      id
-      title
-      content
-      price
-      rating
+export const onCreateTablecount = /* GraphQL */ `
+  subscription OnCreateTablecount {
+    onCreateTablecount {
+      tableName
+      filter
+      count
       createdAt
       updatedAt
     }
   }
 `;
-export const onUpdateMyType = /* GraphQL */ `
-  subscription OnUpdateMyType {
-    onUpdateMyType {
-      id
-      title
-      content
-      price
-      rating
+export const onUpdateTablecount = /* GraphQL */ `
+  subscription OnUpdateTablecount {
+    onUpdateTablecount {
+      tableName
+      filter
+      count
       createdAt
       updatedAt
     }
   }
 `;
-export const onDeleteMyType = /* GraphQL */ `
-  subscription OnDeleteMyType {
-    onDeleteMyType {
-      id
-      title
-      content
-      price
-      rating
+export const onDeleteTablecount = /* GraphQL */ `
+  subscription OnDeleteTablecount {
+    onDeleteTablecount {
+      tableName
+      filter
+      count
       createdAt
       updatedAt
     }
   }
 `;
-export const onCreateInvitation = /* GraphQL */ `
-  subscription OnCreateInvitation {
-    onCreateInvitation {
+export const onCreateUserBallot = /* GraphQL */ `
+  subscription OnCreateUserBallot {
+    onCreateUserBallot {
       id
-      dafaultFriends {
-        items {
-          id
-          fullName
-          email
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      fromUser {
+      userID
+      PollitemID
+      createdAt
+      updatedAt
+      user {
         id
-        fullName
         email
+        familyName
+        givenName
         avatar {
           name
         }
@@ -67,21 +56,186 @@ export const onCreateInvitation = /* GraphQL */ `
         conversations {
           nextToken
         }
-        messages {
+        pollitems {
           nextToken
         }
         videos {
           nextToken
         }
+        createdAt
+        updatedAt
         friends {
           nextToken
         }
         watchs {
           nextToken
         }
+        messages {
+          nextToken
+        }
+      }
+      Pollitem {
+        id
+        title
+        votecount
+        fixcount
+        isSuggestion
+        users {
+          nextToken
+        }
+        type
+        sortNumber
         createdAt
         updatedAt
+        polltopic {
+          id
+          title
+          description
+          type
+          sortNumber
+          createdAt
+          updatedAt
+        }
       }
+    }
+  }
+`;
+export const onUpdateUserBallot = /* GraphQL */ `
+  subscription OnUpdateUserBallot {
+    onUpdateUserBallot {
+      id
+      userID
+      PollitemID
+      createdAt
+      updatedAt
+      user {
+        id
+        email
+        familyName
+        givenName
+        avatar {
+          name
+        }
+        organizations {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        pollitems {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        friends {
+          nextToken
+        }
+        watchs {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+      }
+      Pollitem {
+        id
+        title
+        votecount
+        fixcount
+        isSuggestion
+        users {
+          nextToken
+        }
+        type
+        sortNumber
+        createdAt
+        updatedAt
+        polltopic {
+          id
+          title
+          description
+          type
+          sortNumber
+          createdAt
+          updatedAt
+        }
+      }
+    }
+  }
+`;
+export const onDeleteUserBallot = /* GraphQL */ `
+  subscription OnDeleteUserBallot {
+    onDeleteUserBallot {
+      id
+      userID
+      PollitemID
+      createdAt
+      updatedAt
+      user {
+        id
+        email
+        familyName
+        givenName
+        avatar {
+          name
+        }
+        organizations {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        pollitems {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        friends {
+          nextToken
+        }
+        watchs {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+      }
+      Pollitem {
+        id
+        title
+        votecount
+        fixcount
+        isSuggestion
+        users {
+          nextToken
+        }
+        type
+        sortNumber
+        createdAt
+        updatedAt
+        polltopic {
+          id
+          title
+          description
+          type
+          sortNumber
+          createdAt
+          updatedAt
+        }
+      }
+    }
+  }
+`;
+export const onCreateInvitation = /* GraphQL */ `
+  subscription OnCreateInvitation {
+    onCreateInvitation {
+      id
       inviteToken
       createdAt
       updatedAt
@@ -92,44 +246,6 @@ export const onUpdateInvitation = /* GraphQL */ `
   subscription OnUpdateInvitation {
     onUpdateInvitation {
       id
-      dafaultFriends {
-        items {
-          id
-          fullName
-          email
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      fromUser {
-        id
-        fullName
-        email
-        avatar {
-          name
-        }
-        organizations {
-          nextToken
-        }
-        conversations {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        videos {
-          nextToken
-        }
-        friends {
-          nextToken
-        }
-        watchs {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
       inviteToken
       createdAt
       updatedAt
@@ -140,303 +256,7 @@ export const onDeleteInvitation = /* GraphQL */ `
   subscription OnDeleteInvitation {
     onDeleteInvitation {
       id
-      dafaultFriends {
-        items {
-          id
-          fullName
-          email
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      fromUser {
-        id
-        fullName
-        email
-        avatar {
-          name
-        }
-        organizations {
-          nextToken
-        }
-        conversations {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        videos {
-          nextToken
-        }
-        friends {
-          nextToken
-        }
-        watchs {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
       inviteToken
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onCreateUser = /* GraphQL */ `
-  subscription OnCreateUser($id: String) {
-    onCreateUser(id: $id) {
-      id
-      fullName
-      email
-      avatar {
-        name
-        image {
-          bucket
-          region
-          key
-        }
-        preview {
-          bucket
-          region
-          key
-        }
-      }
-      organizations {
-        items {
-          id
-          userID
-          organizationID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      conversations {
-        items {
-          id
-          userID
-          conversationID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      messages {
-        items {
-          id
-          content
-          authorId
-          messageConversationId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      videos {
-        items {
-          id
-          name
-          brief
-          url
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      friends {
-        items {
-          id
-          fullName
-          email
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      watchs {
-        items {
-          id
-          fullName
-          email
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateUser = /* GraphQL */ `
-  subscription OnUpdateUser($id: String) {
-    onUpdateUser(id: $id) {
-      id
-      fullName
-      email
-      avatar {
-        name
-        image {
-          bucket
-          region
-          key
-        }
-        preview {
-          bucket
-          region
-          key
-        }
-      }
-      organizations {
-        items {
-          id
-          userID
-          organizationID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      conversations {
-        items {
-          id
-          userID
-          conversationID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      messages {
-        items {
-          id
-          content
-          authorId
-          messageConversationId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      videos {
-        items {
-          id
-          name
-          brief
-          url
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      friends {
-        items {
-          id
-          fullName
-          email
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      watchs {
-        items {
-          id
-          fullName
-          email
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteUser = /* GraphQL */ `
-  subscription OnDeleteUser($id: String) {
-    onDeleteUser(id: $id) {
-      id
-      fullName
-      email
-      avatar {
-        name
-        image {
-          bucket
-          region
-          key
-        }
-        preview {
-          bucket
-          region
-          key
-        }
-      }
-      organizations {
-        items {
-          id
-          userID
-          organizationID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      conversations {
-        items {
-          id
-          userID
-          conversationID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      messages {
-        items {
-          id
-          content
-          authorId
-          messageConversationId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      videos {
-        items {
-          id
-          name
-          brief
-          url
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      friends {
-        items {
-          id
-          fullName
-          email
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      watchs {
-        items {
-          id
-          fullName
-          email
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -567,34 +387,6 @@ export const onCreateUserOrganization = /* GraphQL */ `
     onCreateUserOrganization {
       id
       userID
-      user {
-        id
-        fullName
-        email
-        avatar {
-          name
-        }
-        organizations {
-          nextToken
-        }
-        conversations {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        videos {
-          nextToken
-        }
-        friends {
-          nextToken
-        }
-        watchs {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
       organizationID
       organization {
         id
@@ -617,6 +409,38 @@ export const onCreateUserOrganization = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      user {
+        id
+        email
+        familyName
+        givenName
+        avatar {
+          name
+        }
+        organizations {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        pollitems {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        friends {
+          nextToken
+        }
+        watchs {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+      }
     }
   }
 `;
@@ -625,34 +449,6 @@ export const onUpdateUserOrganization = /* GraphQL */ `
     onUpdateUserOrganization {
       id
       userID
-      user {
-        id
-        fullName
-        email
-        avatar {
-          name
-        }
-        organizations {
-          nextToken
-        }
-        conversations {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        videos {
-          nextToken
-        }
-        friends {
-          nextToken
-        }
-        watchs {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
       organizationID
       organization {
         id
@@ -675,6 +471,38 @@ export const onUpdateUserOrganization = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      user {
+        id
+        email
+        familyName
+        givenName
+        avatar {
+          name
+        }
+        organizations {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        pollitems {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        friends {
+          nextToken
+        }
+        watchs {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+      }
     }
   }
 `;
@@ -683,34 +511,6 @@ export const onDeleteUserOrganization = /* GraphQL */ `
     onDeleteUserOrganization {
       id
       userID
-      user {
-        id
-        fullName
-        email
-        avatar {
-          name
-        }
-        organizations {
-          nextToken
-        }
-        conversations {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        videos {
-          nextToken
-        }
-        friends {
-          nextToken
-        }
-        watchs {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
       organizationID
       organization {
         id
@@ -733,6 +533,38 @@ export const onDeleteUserOrganization = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      user {
+        id
+        email
+        familyName
+        givenName
+        avatar {
+          name
+        }
+        organizations {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        pollitems {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        friends {
+          nextToken
+        }
+        watchs {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+      }
     }
   }
 `;
@@ -774,10 +606,14 @@ export const onCreateConversationUser = /* GraphQL */ `
     onCreateConversationUser {
       id
       userID
+      conversationID
+      createdAt
+      updatedAt
       user {
         id
-        fullName
         email
+        familyName
+        givenName
         avatar {
           name
         }
@@ -787,36 +623,36 @@ export const onCreateConversationUser = /* GraphQL */ `
         conversations {
           nextToken
         }
-        messages {
+        pollitems {
           nextToken
         }
         videos {
           nextToken
         }
+        createdAt
+        updatedAt
         friends {
           nextToken
         }
         watchs {
           nextToken
         }
-        createdAt
-        updatedAt
-      }
-      conversationID
-      conversation {
-        id
         messages {
           nextToken
         }
+      }
+      conversation {
+        id
         users {
           nextToken
         }
         members
         createdAt
         updatedAt
+        messages {
+          nextToken
+        }
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -825,10 +661,14 @@ export const onUpdateConversationUser = /* GraphQL */ `
     onUpdateConversationUser {
       id
       userID
+      conversationID
+      createdAt
+      updatedAt
       user {
         id
-        fullName
         email
+        familyName
+        givenName
         avatar {
           name
         }
@@ -838,36 +678,36 @@ export const onUpdateConversationUser = /* GraphQL */ `
         conversations {
           nextToken
         }
-        messages {
+        pollitems {
           nextToken
         }
         videos {
           nextToken
         }
+        createdAt
+        updatedAt
         friends {
           nextToken
         }
         watchs {
           nextToken
         }
-        createdAt
-        updatedAt
-      }
-      conversationID
-      conversation {
-        id
         messages {
           nextToken
         }
+      }
+      conversation {
+        id
         users {
           nextToken
         }
         members
         createdAt
         updatedAt
+        messages {
+          nextToken
+        }
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -876,10 +716,14 @@ export const onDeleteConversationUser = /* GraphQL */ `
     onDeleteConversationUser {
       id
       userID
+      conversationID
+      createdAt
+      updatedAt
       user {
         id
-        fullName
         email
+        familyName
+        givenName
         avatar {
           name
         }
@@ -889,36 +733,36 @@ export const onDeleteConversationUser = /* GraphQL */ `
         conversations {
           nextToken
         }
-        messages {
+        pollitems {
           nextToken
         }
         videos {
           nextToken
         }
+        createdAt
+        updatedAt
         friends {
           nextToken
         }
         watchs {
           nextToken
         }
-        createdAt
-        updatedAt
-      }
-      conversationID
-      conversation {
-        id
         messages {
           nextToken
         }
+      }
+      conversation {
+        id
         users {
           nextToken
         }
         members
         createdAt
         updatedAt
+        messages {
+          nextToken
+        }
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -930,65 +774,73 @@ export const onCreateNotification = /* GraphQL */ `
       type
       action
       receiverID
-      receiver {
-        id
-        fullName
-        email
-        avatar {
-          name
-        }
-        organizations {
-          nextToken
-        }
-        conversations {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        videos {
-          nextToken
-        }
-        friends {
-          nextToken
-        }
-        watchs {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      sender {
-        id
-        fullName
-        email
-        avatar {
-          name
-        }
-        organizations {
-          nextToken
-        }
-        conversations {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        videos {
-          nextToken
-        }
-        friends {
-          nextToken
-        }
-        watchs {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
       isRead
       createdAt
       updatedAt
+      receiver {
+        id
+        email
+        familyName
+        givenName
+        avatar {
+          name
+        }
+        organizations {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        pollitems {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        friends {
+          nextToken
+        }
+        watchs {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+      }
+      sender {
+        id
+        email
+        familyName
+        givenName
+        avatar {
+          name
+        }
+        organizations {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        pollitems {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        friends {
+          nextToken
+        }
+        watchs {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+      }
     }
   }
 `;
@@ -1000,65 +852,73 @@ export const onUpdateNotification = /* GraphQL */ `
       type
       action
       receiverID
-      receiver {
-        id
-        fullName
-        email
-        avatar {
-          name
-        }
-        organizations {
-          nextToken
-        }
-        conversations {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        videos {
-          nextToken
-        }
-        friends {
-          nextToken
-        }
-        watchs {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      sender {
-        id
-        fullName
-        email
-        avatar {
-          name
-        }
-        organizations {
-          nextToken
-        }
-        conversations {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        videos {
-          nextToken
-        }
-        friends {
-          nextToken
-        }
-        watchs {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
       isRead
       createdAt
       updatedAt
+      receiver {
+        id
+        email
+        familyName
+        givenName
+        avatar {
+          name
+        }
+        organizations {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        pollitems {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        friends {
+          nextToken
+        }
+        watchs {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+      }
+      sender {
+        id
+        email
+        familyName
+        givenName
+        avatar {
+          name
+        }
+        organizations {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        pollitems {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        friends {
+          nextToken
+        }
+        watchs {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+      }
     }
   }
 `;
@@ -1070,65 +930,73 @@ export const onDeleteNotification = /* GraphQL */ `
       type
       action
       receiverID
-      receiver {
-        id
-        fullName
-        email
-        avatar {
-          name
-        }
-        organizations {
-          nextToken
-        }
-        conversations {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        videos {
-          nextToken
-        }
-        friends {
-          nextToken
-        }
-        watchs {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      sender {
-        id
-        fullName
-        email
-        avatar {
-          name
-        }
-        organizations {
-          nextToken
-        }
-        conversations {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        videos {
-          nextToken
-        }
-        friends {
-          nextToken
-        }
-        watchs {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
       isRead
       createdAt
       updatedAt
+      receiver {
+        id
+        email
+        familyName
+        givenName
+        avatar {
+          name
+        }
+        organizations {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        pollitems {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        friends {
+          nextToken
+        }
+        watchs {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+      }
+      sender {
+        id
+        email
+        familyName
+        givenName
+        avatar {
+          name
+        }
+        organizations {
+          nextToken
+        }
+        conversations {
+          nextToken
+        }
+        pollitems {
+          nextToken
+        }
+        videos {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        friends {
+          nextToken
+        }
+        watchs {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+      }
     }
   }
 `;
@@ -1152,10 +1020,13 @@ export const onCreateVideo = /* GraphQL */ `
           key
         }
       }
+      createdAt
+      updatedAt
       author {
         id
-        fullName
         email
+        familyName
+        givenName
         avatar {
           name
         }
@@ -1165,23 +1036,24 @@ export const onCreateVideo = /* GraphQL */ `
         conversations {
           nextToken
         }
-        messages {
+        pollitems {
           nextToken
         }
         videos {
           nextToken
         }
+        createdAt
+        updatedAt
         friends {
           nextToken
         }
         watchs {
           nextToken
         }
-        createdAt
-        updatedAt
+        messages {
+          nextToken
+        }
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -1205,10 +1077,13 @@ export const onUpdateVideo = /* GraphQL */ `
           key
         }
       }
+      createdAt
+      updatedAt
       author {
         id
-        fullName
         email
+        familyName
+        givenName
         avatar {
           name
         }
@@ -1218,23 +1093,24 @@ export const onUpdateVideo = /* GraphQL */ `
         conversations {
           nextToken
         }
-        messages {
+        pollitems {
           nextToken
         }
         videos {
           nextToken
         }
+        createdAt
+        updatedAt
         friends {
           nextToken
         }
         watchs {
           nextToken
         }
-        createdAt
-        updatedAt
+        messages {
+          nextToken
+        }
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -1258,10 +1134,13 @@ export const onDeleteVideo = /* GraphQL */ `
           key
         }
       }
+      createdAt
+      updatedAt
       author {
         id
-        fullName
         email
+        familyName
+        givenName
         avatar {
           name
         }
@@ -1271,23 +1150,699 @@ export const onDeleteVideo = /* GraphQL */ `
         conversations {
           nextToken
         }
-        messages {
+        pollitems {
           nextToken
         }
         videos {
           nextToken
         }
+        createdAt
+        updatedAt
         friends {
           nextToken
         }
         watchs {
           nextToken
         }
-        createdAt
-        updatedAt
+        messages {
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const onCreateUser = /* GraphQL */ `
+  subscription OnCreateUser($id: String) {
+    onCreateUser(id: $id) {
+      id
+      email
+      familyName
+      givenName
+      avatar {
+        name
+        image {
+          bucket
+          region
+          key
+        }
+        preview {
+          bucket
+          region
+          key
+        }
+      }
+      organizations {
+        items {
+          id
+          userID
+          organizationID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      conversations {
+        items {
+          id
+          userID
+          conversationID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      pollitems {
+        items {
+          id
+          userID
+          PollitemID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      videos {
+        items {
+          id
+          name
+          brief
+          url
+          createdAt
+          updatedAt
+        }
+        nextToken
       }
       createdAt
       updatedAt
+      friends {
+        items {
+          id
+          email
+          familyName
+          givenName
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      watchs {
+        items {
+          id
+          email
+          familyName
+          givenName
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          content
+          authorId
+          messageConversationId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const onUpdateUser = /* GraphQL */ `
+  subscription OnUpdateUser($id: String) {
+    onUpdateUser(id: $id) {
+      id
+      email
+      familyName
+      givenName
+      avatar {
+        name
+        image {
+          bucket
+          region
+          key
+        }
+        preview {
+          bucket
+          region
+          key
+        }
+      }
+      organizations {
+        items {
+          id
+          userID
+          organizationID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      conversations {
+        items {
+          id
+          userID
+          conversationID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      pollitems {
+        items {
+          id
+          userID
+          PollitemID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      videos {
+        items {
+          id
+          name
+          brief
+          url
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      friends {
+        items {
+          id
+          email
+          familyName
+          givenName
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      watchs {
+        items {
+          id
+          email
+          familyName
+          givenName
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          content
+          authorId
+          messageConversationId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const onCreateVotetopic = /* GraphQL */ `
+  subscription OnCreateVotetopic {
+    onCreateVotetopic {
+      id
+      title
+      description
+      type
+      createdAt
+      updatedAt
+      voteitems {
+        items {
+          id
+          title
+          isActive
+          type
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const onUpdateVotetopic = /* GraphQL */ `
+  subscription OnUpdateVotetopic {
+    onUpdateVotetopic {
+      id
+      title
+      description
+      type
+      createdAt
+      updatedAt
+      voteitems {
+        items {
+          id
+          title
+          isActive
+          type
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const onDeleteVotetopic = /* GraphQL */ `
+  subscription OnDeleteVotetopic {
+    onDeleteVotetopic {
+      id
+      title
+      description
+      type
+      createdAt
+      updatedAt
+      voteitems {
+        items {
+          id
+          title
+          isActive
+          type
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const onCreateVoteitem = /* GraphQL */ `
+  subscription OnCreateVoteitem {
+    onCreateVoteitem {
+      id
+      title
+      isActive
+      type
+      createdAt
+      updatedAt
+      votetopic {
+        id
+        title
+        description
+        type
+        createdAt
+        updatedAt
+        voteitems {
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const onUpdateVoteitem = /* GraphQL */ `
+  subscription OnUpdateVoteitem {
+    onUpdateVoteitem {
+      id
+      title
+      isActive
+      type
+      createdAt
+      updatedAt
+      votetopic {
+        id
+        title
+        description
+        type
+        createdAt
+        updatedAt
+        voteitems {
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const onDeleteVoteitem = /* GraphQL */ `
+  subscription OnDeleteVoteitem {
+    onDeleteVoteitem {
+      id
+      title
+      isActive
+      type
+      createdAt
+      updatedAt
+      votetopic {
+        id
+        title
+        description
+        type
+        createdAt
+        updatedAt
+        voteitems {
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const onCreatePollperiod = /* GraphQL */ `
+  subscription OnCreatePollperiod {
+    onCreatePollperiod {
+      id
+      title
+      description
+      fromDate
+      toDate
+      type
+      createdAt
+      updatedAt
+      polltopics {
+        items {
+          id
+          title
+          description
+          type
+          sortNumber
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const onUpdatePollperiod = /* GraphQL */ `
+  subscription OnUpdatePollperiod {
+    onUpdatePollperiod {
+      id
+      title
+      description
+      fromDate
+      toDate
+      type
+      createdAt
+      updatedAt
+      polltopics {
+        items {
+          id
+          title
+          description
+          type
+          sortNumber
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const onDeletePollperiod = /* GraphQL */ `
+  subscription OnDeletePollperiod {
+    onDeletePollperiod {
+      id
+      title
+      description
+      fromDate
+      toDate
+      type
+      createdAt
+      updatedAt
+      polltopics {
+        items {
+          id
+          title
+          description
+          type
+          sortNumber
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const onCreatePolltopic = /* GraphQL */ `
+  subscription OnCreatePolltopic {
+    onCreatePolltopic {
+      id
+      title
+      description
+      type
+      sortNumber
+      createdAt
+      updatedAt
+      pollperiod {
+        id
+        title
+        description
+        fromDate
+        toDate
+        type
+        createdAt
+        updatedAt
+        polltopics {
+          nextToken
+        }
+      }
+      pollitems {
+        items {
+          id
+          title
+          votecount
+          fixcount
+          isSuggestion
+          type
+          sortNumber
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const onUpdatePolltopic = /* GraphQL */ `
+  subscription OnUpdatePolltopic {
+    onUpdatePolltopic {
+      id
+      title
+      description
+      type
+      sortNumber
+      createdAt
+      updatedAt
+      pollperiod {
+        id
+        title
+        description
+        fromDate
+        toDate
+        type
+        createdAt
+        updatedAt
+        polltopics {
+          nextToken
+        }
+      }
+      pollitems {
+        items {
+          id
+          title
+          votecount
+          fixcount
+          isSuggestion
+          type
+          sortNumber
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const onDeletePolltopic = /* GraphQL */ `
+  subscription OnDeletePolltopic {
+    onDeletePolltopic {
+      id
+      title
+      description
+      type
+      sortNumber
+      createdAt
+      updatedAt
+      pollperiod {
+        id
+        title
+        description
+        fromDate
+        toDate
+        type
+        createdAt
+        updatedAt
+        polltopics {
+          nextToken
+        }
+      }
+      pollitems {
+        items {
+          id
+          title
+          votecount
+          fixcount
+          isSuggestion
+          type
+          sortNumber
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const onCreatePollitem = /* GraphQL */ `
+  subscription OnCreatePollitem {
+    onCreatePollitem {
+      id
+      title
+      votecount
+      fixcount
+      isSuggestion
+      users {
+        items {
+          id
+          userID
+          PollitemID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      type
+      sortNumber
+      createdAt
+      updatedAt
+      polltopic {
+        id
+        title
+        description
+        type
+        sortNumber
+        createdAt
+        updatedAt
+        pollperiod {
+          id
+          title
+          description
+          fromDate
+          toDate
+          type
+          createdAt
+          updatedAt
+        }
+        pollitems {
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const onUpdatePollitem = /* GraphQL */ `
+  subscription OnUpdatePollitem {
+    onUpdatePollitem {
+      id
+      title
+      votecount
+      fixcount
+      isSuggestion
+      users {
+        items {
+          id
+          userID
+          PollitemID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      type
+      sortNumber
+      createdAt
+      updatedAt
+      polltopic {
+        id
+        title
+        description
+        type
+        sortNumber
+        createdAt
+        updatedAt
+        pollperiod {
+          id
+          title
+          description
+          fromDate
+          toDate
+          type
+          createdAt
+          updatedAt
+        }
+        pollitems {
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const onDeletePollitem = /* GraphQL */ `
+  subscription OnDeletePollitem {
+    onDeletePollitem {
+      id
+      title
+      votecount
+      fixcount
+      isSuggestion
+      users {
+        items {
+          id
+          userID
+          PollitemID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      type
+      sortNumber
+      createdAt
+      updatedAt
+      polltopic {
+        id
+        title
+        description
+        type
+        sortNumber
+        createdAt
+        updatedAt
+        pollperiod {
+          id
+          title
+          description
+          fromDate
+          toDate
+          type
+          createdAt
+          updatedAt
+        }
+        pollitems {
+          nextToken
+        }
+      }
     }
   }
 `;

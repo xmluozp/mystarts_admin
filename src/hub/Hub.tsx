@@ -1,17 +1,27 @@
 //import react
-import React from "react"
+import React, { useEffect } from "react"
+import _ from 'lodash'
 
 
 //import 3rd party
 
 //import my components
 import { routes } from "hub/_routes/routes"
+import navs from './_routes/navs'
+
 import CONST from "_const"
-import { authFilterForRoutes } from "./_routes/auth"
+import { authFilterForRoutes, navsFilterForRoutes } from "./_routes/auth"
 import View from './HubView'
 // import { title } from "process"
-import {withAuthenticator } from '@aws-amplify/ui-react'
 
+
+// *********** amplify ***********
+import { API, graphqlOperation, Auth, Hub as AmplifyHub } from "aws-amplify"
+import { getUser, registerUser } from 'graphql.js'
+
+// *********** redux ***********
+import { connect } from "react-redux"
+import { authActions as myActions } from '_redux_actions'
 
 /** ==========================================================================
  * THIS PAGE: control center; organize pages.
@@ -23,25 +33,153 @@ import {withAuthenticator } from '@aws-amplify/ui-react'
  * pass auth list of this user in. return all routes this user allowed to open
  * */
 const routes_withAuth = (user = {}) => authFilterForRoutes(user, routes)
-
-const Hub = ({ ...props }) => {
-
-	// TODO，之后这个role从props里面的user取
-	const user1 = {
-		name: "zhaoping",
-		email: "xmluozp@gmail.com",
-		auth: [2, 3, 4],
-		role: CONST.ROLES.ENTREPRENEUR,
-	}
+const navs_withAuth = (user = {}) => navsFilterForRoutes(user, navs.items)
 
 
-	// TODO: 获取user，用redux的action, 推给store
-	return <View
-		routes={routes_withAuth(user1)}
-		user={user1}
-	/>
+interface Props {
+    // onTestLogin: (event: React.MouseEvent<HTMLButtonElement>) => void;
+	onCacheIn?: Function
+	onCacheOut?: Function
+    userAuth?: any
 }
 
 
+const Hub: React.FC<Props> = ({onCacheIn, onCacheOut, userAuth, ...props }) => {
 
-export default withAuthenticator(Hub)
+	useEffect(() => {
+
+		// cache user to store
+		cacheUser()
+
+		// update user cache when login/logout
+		AmplifyHub.listen("auth", onHubCapsule)
+		return () => {
+			AmplifyHub.remove("auth", onHubCapsule)
+		}
+	}, [])
+
+
+	const cacheUser = async () => {
+		try {
+			// get user id (看有没有登录)
+			const authData: any = await Auth.currentAuthenticatedUser()
+
+			// console.log("authData, ", authData)
+
+			// 有登录就从user表取数据, 否则action: clearCacheUser
+			if (authData) {
+				cacheUserData(authData)
+			}
+		} catch (error) {
+			console.error("No user ", error)
+			onCacheOut && onCacheOut()
+		}
+	}
+
+	// cache user data to store
+	const cacheUserData = async (signInData: any) => {
+		try {
+
+			// get userData from userAuth
+			const getUserInput = {
+				id: signInData.signInUserSession.idToken.payload.sub,
+			}
+
+			// get groups from cognito
+			let groups = signInData.signInUserSession.idToken.payload["cognito:groups"]
+
+			const result: any = await API.graphql(graphqlOperation(getUser,getUserInput))
+			const { data } = result
+
+			let userAuth;
+
+			if (data.getUser){
+				userAuth = data.getUser
+			} else {
+				// default: id, email
+				const registerUserInput = {
+					id: signInData.signInUserSession.idToken.payload.sub,
+					email: signInData.attributes.email,
+					familyName: signInData.attributes.family_name,
+					givenName: signInData.attributes.given_name
+				}
+
+				const result:any = await API.graphql(graphqlOperation(registerUser, {...registerUserInput}))
+				userAuth = result.data.registerUser
+			}
+
+			let userAuthCache = null
+
+			if(userAuth && !_.isEmpty(userAuth)) {
+		
+				let permissions: string[] = []
+		
+				for (let i = 0; i < (groups && groups.length) || 0; i++) {
+		
+					const groupName: string = groups[i]
+					permissions = [...permissions, ...CONST.ROLES[groupName]]
+				}
+			
+				userAuthCache = {
+					...userAuth,
+					auth: permissions,
+					role: groups ? groups[0] : 'guest',
+				}
+			}
+
+			onCacheIn && onCacheIn(userAuthCache)
+
+		} catch (error) {
+			console.error("No user data ", error)
+			onCacheOut && onCacheOut()
+		}
+	}
+
+	const onHubCapsule = (capsule: any) => {
+
+		// console.log("hub listen", capsule.payload.event)
+
+		// 用redux的action, 更新store?
+		switch (capsule.payload.event) {
+			case "signIn":
+				// setstate(s => ({ ...s, user: user1 }))
+				cacheUserData(capsule.payload.data)
+				break
+			case "signUp":
+				break
+			case "signOut":
+				onCacheOut && onCacheOut()
+				break
+			default:
+				return
+		}
+	}
+
+	return <View
+		routes={routes_withAuth(userAuth)}
+		userAuth={userAuth}
+		navs={navs_withAuth(userAuth)}
+		{...props}
+	/>
+}
+
+// ************************************************ 
+// ********************  redux ******************** 
+// ************************************************ 
+const componentShouldUpdate = (preProps: Object, nextProps: Object) => {
+    return false
+}
+
+
+const myState = (state: any) => {
+    return {
+        userAuth: state.authData.userAuth,
+    }
+}
+
+const actionCreators = {
+	onCacheIn: myActions.cacheIn,
+	onCacheOut: myActions.cacheOut,
+}
+
+export default connect(myState, actionCreators)(React.memo(Hub, componentShouldUpdate))

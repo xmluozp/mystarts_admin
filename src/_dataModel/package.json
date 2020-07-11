@@ -2,5 +2,5 @@
   "name": "_dataModel",
   "version": "0.0.0",
   "private": true,
-  "main": "./_dataModel.js"
+  "main": "./_dataModel.tsx"
 }

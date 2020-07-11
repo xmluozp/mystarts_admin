@@ -5,11 +5,11 @@
 const constMaker = (constPrefix: String = "FACELESS") => {
 
   const CONST = {
-    GETDROPDOWN: constPrefix + "_GETDROPDOWN",
-    GETDROPDOWN_SUCCESS: constPrefix + "_GETDROPDOWN_SUCCESS",
-    GETBYSEARCH: constPrefix + "_GETBYSEARCH",
+    CLEAR:   constPrefix + "_CLEAR",
+    CLEARLIST:   constPrefix + "_CLEARLIST",
+
+    GETLIST_SUCCESS: constPrefix + "_GETLIST_SUCCESS",
     GETBYSEARCH_SUCCESS: constPrefix + "_GETBYSEARCH_SUCCESS",
-    GET: constPrefix + "_GET",
     GET_SUCCESS: constPrefix + "_GET_SUCCESS",
     UPDATE_SUCCESS: constPrefix + "_UPDATE_SUCCESS",
     UPDATE_FAILURE: constPrefix + "_UPDATE_FAILURE",

@@ -2,41 +2,24 @@
  * THIS PAGE: main component: Login
  *  ========================================================================== */
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import View from './LoginView'
+
 
 // *********** redux ***********
 import { connect } from "react-redux"
 import { authActions as myActions } from '_redux_actions'
 
 interface Props {
-    onTestLogin: (event: React.MouseEvent<HTMLButtonElement>) => void;
-    message?: String
+    // onTestLogin: (event: React.MouseEvent<HTMLButtonElement>) => void;
+    // message?: String
     pageName: String
 }
 
+const Dominator: React.FC<Props> = ({ ...props }) => {
 
-const Dominator: React.FC<Props> = ({ onTestLogin, message, ...props }) => {
-
-    const handleOnSubmit = (states: any) => {
-
-        // TODO: login
-        console.log("login")
-    }
-
-
-    // ------------------- { pass states and props in }
-    const states = {
-        handleOnSubmit,
-
-        // --------- pass redux actions and states down
-        onTestLogin,
-        message
-    }
-
-    return <View {...props} {...states} />
+    return <View {...props} />
 }
-
 
 // ======================= export =======================
 const componentShouldUpdate = (preProps: Object, nextProps: Object) => {
@@ -49,9 +32,9 @@ const componentShouldUpdate = (preProps: Object, nextProps: Object) => {
 // ********************  redux ******************** 
 // ************************************************ 
 const myState = (state: any) => {
-	return {
-		message: state.authData.message,
-	}
+    return {
+        message: state.authData.message,
+    }
 }
 
 const actionCreators = {

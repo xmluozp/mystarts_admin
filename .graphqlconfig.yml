@@ -1,6 +1,6 @@
 projects:
   mystartsadmin:
-    schemaPath: src/graphql/schema.json
+    schemaPath: amplify/backend/api/mystartsadmin/build/schema.graphql
     includes:
       - src/graphql/**/*.js
     excludes:
