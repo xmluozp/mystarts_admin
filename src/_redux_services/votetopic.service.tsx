@@ -1,19 +1,15 @@
 /** ==========================================================================
  * THIS PAGE: could change to REST if needed
 ========================================================================== */
-
-// import { authHeader, handleResponse,  h_queryString, h_nilFilter, h_nilFilter_update } from '_helper';
-// import {RESTURL} from '../config'
-import { API, graphqlOperation } from "aws-amplify"
+import { services } from './_maker'
 import MT from "_dataModel"
 
-// 
-import { listVotetopics, getVotetopic } from "graphql/queries"
-import { updateVotetopic, createVotetopic, deleteVotetopic} from "graphql/mutations"
+import { listVotetopics, listVotetopicOrderbyCreatedAt, getVotetopic } from "graphql/queries"
+import { updateVotetopic, createVotetopic, deleteVotetopic } from "graphql/mutations"
 
 const CRUD = {
-    list: listVotetopics,
-    listName: "listVotetopics",
+    list: listVotetopicOrderbyCreatedAt,
+    listName: "listVotetopicOrderbyCreatedAt",
     get: getVotetopic,
     getName: "getVotetopic",
     update: updateVotetopic,
@@ -24,151 +20,167 @@ const CRUD = {
     _deleteName: "deleteVotetopic",
 }
 
-export const votetopicService = {
+// used to decide where data physically store. and then we can do sorting
+const defaultPK: MT.partitionKey = { pkField: "pk", pkValue: 'Votetopic' }
+/*
+============================  ^  ==============================
+=====================  configure queries  =====================
+============================  ^  ==============================
+*/
+
+const {
     getList,
     get,
     create,
     update,
-    _delete,
+    _delete
+} = services(CRUD)
+
+
+
+// ==================== customized services: ==================
+
+// const search = async() => {...} 
+
+// ====================  export all services: ==================
+export const votetopicService = {
+    getList: getList(defaultPK),
+    get: get(),
+    create: create(defaultPK),
+    update: update(),
+    _delete: _delete(),
 };
 
-/*
-============================  ^  ==============================
-===================== customization part  =====================
-============================  ^  ==============================
-*/
 
-async function getList(variables: any) {
 
-    let resultList: MT.resultList = {
-        list: [],
-    }
+// async function getList(variables: any) {
 
-    try {
-        // console.log("???1")
-        // const result: any = await API.graphql(graphqlOperation(CRUD.list, variables || {}))
-        
-        // @ts-ignore
-        // const result: any = await API.graphql({query: CRUD.list, authMode:"API_KEY"})
+//     let resultList: MT.resultList = {
+//         list: [],
+//     }
 
-        //   graphqlOperation()
-        const result: any = await API.graphql(graphqlOperation(CRUD.list, variables || {}))
-        resultList = {
-            list: result.data[CRUD.listName].items,
-            nextToken: result.data[CRUD.listName].nextToken,
-            message: result.message,
-        }
+//     try {
 
-        return resultList
-    } catch (error) {
-        resultList.error = error
-        return Promise.reject(resultList)
-    }   
-}
+//         // @ts-ignore
+//         const result: any = await API.graphql({query: CRUD.list, authMode: Auth.currentAuthenticatedUser() ? "AMAZON_COGNITO_USER_POOLS" : "IAM"})
 
-async function get(id: String) {
+//         // const result: any = await API.graphql(graphqlOperation(CRUD.list, variables || {}))
+//         resultList = {
+//             list: result.data[CRUD.listName].items,
+//             nextToken: result.data[CRUD.listName].nextToken,
+//             message: result.message,
+//         }
 
-    let resultSingleItem: MT.resultSingleItem = {
-        item: {}
-    }
+//         return resultList
+//     } catch (error) {
+//         resultList.error = error
+//         return Promise.reject(resultList)
+//     }   
+// }
 
-    try {
-        const input = {id}
+// async function get(id: String) {
 
-        // @ts-ignore
-        // const result: any = await API.graphql({query: CRUD.get, variables: input, authMode:"API_KEY"})
+//     let resultSingleItem: MT.resultSingleItem = {
+//         item: {}
+//     }
 
-        const result: any = await API.graphql(graphqlOperation(CRUD.get, input))
-        const item = result.data[CRUD.getName]
+//     try {
+//         const input = {id}
 
-        resultSingleItem = {
-            item,
-            message: result.message,
-        }
+//         // @ts-ignore
+//         const result: any = await API.graphql({query: CRUD.get, variables: input, authMode: Auth.currentAuthenticatedUser() ? "AMAZON_COGNITO_USER_POOLS" : "IAM"})
 
-        return resultSingleItem
-    } catch (error) {
-        resultSingleItem.error = error
-        return Promise.reject(resultSingleItem)
-    }   
-}
+//         // const result: any = await API.graphql(graphqlOperation(CRUD.get, input))
+//         const item = result.data[CRUD.getName]
 
-async function create(data) {
+//         resultSingleItem = {
+//             item,
+//             message: result.message,
+//         }
 
-    let resultSingleItem: MT.resultSingleItem = {
-        item: {}
-    }
+//         return resultSingleItem
+//     } catch (error) {
+//         resultSingleItem.error = error
+//         return Promise.reject(resultSingleItem)
+//     }   
+// }
 
-    try {
+// async function create(data) {
 
-        // {... type: "Set"} is used for sorting
-        const input = {...data, type: "Set"}
+//     let resultSingleItem: MT.resultSingleItem = {
+//         item: {}
+//     }
 
-        // @ts-ignore
-        // const result: any = await API.graphql({query: CRUD.create, variables: {input}, authMode:"AMAZON_COGNITO_USER_POOLS"})
-        const result: any = await API.graphql(graphqlOperation(CRUD.create, {input}))
-       
-        resultSingleItem = {
-            item: result.data[CRUD.createName],
-            message: result.message,
-        }
+//     try {
 
-        return resultSingleItem
-    } catch (error) {
-        resultSingleItem.error = error
-        return Promise.reject(resultSingleItem)
-    }   
-}
+//         // {... type: "Set"} is used for sorting
+//         const input = {...data, type: "Set"}
 
-async function update(data) {
-    let resultSingleItem: MT.resultSingleItem = {
-        item: {}
-    }
+//         // @ts-ignore
+//         const result: any = await API.graphql({query: CRUD.create, variables: {input}, authMode: Auth.currentAuthenticatedUser() ? "AMAZON_COGNITO_USER_POOLS" : "IAM"})
+//         // const result: any = await API.graphql(graphqlOperation(CRUD.create, {input}))
 
-    try {
+//         resultSingleItem = {
+//             item: result.data[CRUD.createName],
+//             message: result.message,
+//         }
 
-        const input = {...data}
+//         return resultSingleItem
+//     } catch (error) {
+//         resultSingleItem.error = error
+//         return Promise.reject(resultSingleItem)
+//     }   
+// }
 
-        // @ts-ignore
-        // const result: any = await API.graphql({query: CRUD.update, variables: {input}, authMode:"AMAZON_COGNITO_USER_POOLS"})
-        const result: any = await API.graphql(graphqlOperation(CRUD.update, {input}))
-       
-        console.log("update result",result)
-       
-        resultSingleItem = {
-            item: result.data[CRUD.updateName],
-            message: result.message,
-        }
+// async function update(data) {
+//     let resultSingleItem: MT.resultSingleItem = {
+//         item: {}
+//     }
 
-        return resultSingleItem
-    } catch (error) {
-        console.log(error)
-        resultSingleItem.error = error
-        return Promise.reject(resultSingleItem)
-    }  
-}
+//     try {
 
-async function _delete(id) {
-    let resultSingleItem: MT.resultSingleItem = {
-        item: {}
-    }
+//         const input = {...data}
 
-    try {
-        const input = {id}
+//         // @ts-ignore
+//         const result: any = await API.graphql({query: CRUD.update, variables: {input}, authMode: Auth.currentAuthenticatedUser() ? "AMAZON_COGNITO_USER_POOLS" : "IAM"})
+//         // const result: any = await API.graphql(graphqlOperation(CRUD.update, {input}))
 
-        // @ts-ignore
-        // const result: any = await API.graphql({query: CRUD._delete, variables: {input}, authMode:"API_KEY"})
-        const result: any = await API.graphql(graphqlOperation(CRUD._delete, {input}))
-        const item = result.data[CRUD._deleteName]
+//         console.log("update result",result)
 
-        resultSingleItem = {
-            item,
-            message: result.message,
-        }
+//         resultSingleItem = {
+//             item: result.data[CRUD.updateName],
+//             message: result.message,
+//         }
 
-        return resultSingleItem
-    } catch (error) {
-        resultSingleItem.error = error
-        return Promise.reject(resultSingleItem)
-    }
-}
+//         return resultSingleItem
+//     } catch (error) {
+//         console.log(error)
+//         resultSingleItem.error = error
+//         return Promise.reject(resultSingleItem)
+//     }  
+// }
+
+// async function _delete(id) {
+//     let resultSingleItem: MT.resultSingleItem = {
+//         item: {}
+//     }
+
+//     try {
+//         const input = {id}
+
+//         // @ts-ignore
+//         const result: any = await API.graphql({query: CRUD._delete, variables: {input}, authMode: Auth.currentAuthenticatedUser() ? "AMAZON_COGNITO_USER_POOLS" : "IAM"})
+//         // const result: any = await API.graphql(graphqlOperation(CRUD._delete, {input}))
+//         const item = result.data[CRUD._deleteName]
+
+//         resultSingleItem = {
+//             item,
+//             message: result.message,
+//         }
+
+//         return resultSingleItem
+//     } catch (error) {
+//         resultSingleItem.error = error
+//         return Promise.reject(resultSingleItem)
+//     }
+// }

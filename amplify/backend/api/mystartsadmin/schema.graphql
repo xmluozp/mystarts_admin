@@ -5,24 +5,35 @@
 # **********************************************************************************
 
 # ========================================= table
-type Tablecount @model {
-	tableName: String!
-	filter: String
-	count: Int
-}
+# CUD: triggerred from dynamoDB
+# type Tablecount
+# 	@model
+# 	@auth(
+# 		rules: [
+# 			{ allow: public, provider: iam, operations: [read] }
+# 			{ allow: groups, groups: ["normal", "mentor"], operations: [read] }
+# 			{ allow: groups, groups: ["admin"] }
+# 		]
+# 	) {
+# 	tableName: String!
+# 	filter: String
+# 	count: Int
+# }
 
 # ========================================= user
 type User
 	@model(mutations: { create: "registerUser", update: "updateUser" })
+	@key(
+		name: "UserOrderbyCreatedAt"
+		fields: ["pk", "createdAt"]
+		queryField: "listUserOrderbyCreatedAt"
+	)
 	@auth(
 		rules: [
 			{ allow: public, provider: iam, operations: [read] }
+			{ allow: groups, groups: ["normal", "mentor"], operations: [read] }
+			{ allow: groups, groups: ["admin"] }
 			{ allow: owner, ownerField: "id" }
-			{
-				allow: groups
-				groups: ["admin"]
-				operations: [read, create, update, delete]
-			}
 		]
 	) {
 	id: ID!
@@ -30,200 +41,273 @@ type User
 	familyName: String!
 	givenName: String!
 	avatar: Picture #强行规定大小，就不用担心preview，节省空间成本
-	organizations: [UserOrganization] @connection(name: "UserOrg")
-	conversations: [ConversationUser] @connection(name: "UserConv")
-	pollitems: [UserBallot] @connection(name: "UserPollitem")
-	messages: [Message] @connection(name: "UserMessages")
-	videos: [Video] @connection(name: "UserVideo", sortField: "createdAt")
-	friends: [User] @connection
-	watchs: [User] @connection
+	# organizations: [UserOrganization] @connection(keyName: "orgByUser", fields:["id"])
+	# conversations: [ConversationUser] @connection(keyName: "convByUser", fields:["id"])
+	# pollitems: [UserBallot] @connection(keyName: "pollitemByUser", fields:["id"])
+	# messages: [Message] @connection(keyName: "messagesByUser", fields:["id"])
+	# videos: [Video] @connection(keyName: "videoByUser", fields:["id"])  #pk
+	# friends: [User] @connection(keyName: "friendByUser", fields:["id"])  #pk
+	# watchs: [User] @connection(keyName: "watchByUser", fields:["id"])  #pk
+
+	# for sorting
+	pk: String!
+	createdAt: AWSDateTime!
 }
 
 # ========================================= voting
 type Votetopic
 	@model
+	@key(
+		name: "VotetopicOrderbyCreatedAt"
+		fields: ["pk", "createdAt"]
+		queryField: "listVotetopicOrderbyCreatedAt"
+	)
 	@auth(
 		rules: [
 			{ allow: public, provider: iam, operations: [read] }
-			{ allow: groups, provider: userPools, groups: ["mentor"], operations: [read,update] }
+			{ allow: groups, groups: ["normal", "mentor"], operations: [read] }
+			{ allow: groups, groups: ["admin"] }
+			{ allow: owner, ownerField: "owners" }
 		]
 	)
-	@key(
-		name: "VotetopicWithSort"
-		fields: ["type", "createdAt"]
-		queryField: "listVotetopicWithSort"
-	) {
+	 {
 	id: ID!
 	title: String!
 	description: String
-	voteitems: [Voteitem] @connection(name: "VotetopicItem")
+	voteitems: [Voteitem] @connection(keyName: "itemByVotetopic",  fields: ["id"])
 
 	# for sorting
-	type: String!
+	pk: String!
 	createdAt: AWSDateTime!
+
+	owners: [String]
 }
 
+# children table of votetopic
 type Voteitem
 	@model
+	@key(
+		name: "itemByVotetopic"
+		fields: ["votetopicID", "sortNumber"]
+		queryField: "listVoteitemByVotetopic"
+	)
 	@auth(
 		rules: [
 			{ allow: public, provider: iam, operations: [read] }
-			{
-				allow: groups
-				provider: userPools
-				groups: ["admin"]
-				operations: [create, read]
-			}
+			{ allow: groups, groups: ["normal", "mentor"], operations: [read] }
+			{ allow: groups, groups: ["admin"] }
+			{ allow: owner, ownerField: "owners" }
 		]
-	)
-	@key(
-		name: "VoteitemWithSort"
-		fields: ["type", "createdAt"]
-		queryField: "listVoteitemWithSort"
 	) {
 	id: ID!
 	title: String!
-	votetopic: Votetopic @connection(name: "VotetopicItem")
+	votetopicID: ID!
+	votetopic: Votetopic @connection(fields: ["votetopicID"])
+	
 	isActive: Boolean
 
 	# for sorting
-	type: String!
-	createdAt: AWSDateTime!
+	sortNumber: Int!
+	owners: [String]
 }
 
-type Pollperiod
-	@model
-	@key(
-		name: "PollperiodWithSort"
-		fields: ["type", "createdAt"]
-		queryField: "listPollperiodWithSort"
-	)
-	@auth(
-		rules: [
-			{ allow: public, provider: iam, operations: [read] }
-			{
-				allow: groups
-				groups: ["admin"]
-				operations: [read, create, update, delete]
-			}
-		]
-	) {
-	id: ID!
-	title: String!
-	description: String
-	fromDate: AWSDateTime!
-	toDate: AWSDateTime!
-	polltopics: [Polltopic] @connection(name: "PollperiodTopic")
+# type Pollperiod
+# 	@model
+# 	# @key(
+# 	# 	name: "PollperiodByCreatedAt"
+# 	# 	fields: ["pk", "createdAt"]
+# 	# 	queryField: "listPollperiodByCreatedAt"
+# 	# )
+# 	@auth(
+# 		rules: [
+# 			{ allow: public, provider: iam, operations: [read] }
+# 			{ allow: groups, groups: ["normal", "mentor"], operations: [read] }
+# 			{ allow: groups, groups: ["admin"] }
+# 			{ allow: owner, ownerField: "owners" }
+# 		]
+# 	) {
+# 	id: ID!
+# 	title: String!
+# 	description: String
+# 	fromDate: AWSDateTime!
+# 	toDate: AWSDateTime!
+# 	# polltopics: [Polltopic] @connection(name: "PollperiodTopic")
 
-	# for sorting
-	type: String!
-	createdAt: AWSDateTime!
-}
+# 	# for sorting
+# 	pk: String!
+# 	createdAt: AWSDateTime!
 
-type Polltopic
-	@model
-	@key(
-		name: "PolltopicWithSort"
-		fields: ["type", "sortNumber"]
-		queryField: "listPolltopicWithSort"
-	)
-	@auth(
-		rules: [
-			{ allow: public, provider: iam, operations: [read] }
-			{ allow: groups, groups: ["admin"] }
-		]
-	) {
-	id: ID!
-	title: String!
-	description: String
-	pollperiod: Pollperiod @connection(name: "PollperiodTopic")
-	pollitems: [Pollitem] @connection(name: "PolltopicItem")
+# 	owners: [String]
+# }
 
-	# for sorting
-	type: String!
-	sortNumber: Int
-}
+# type Polltopic
+# 	@model
+# 	# @key(
+# 	# 	name: "PolltopicBySortNumber"
+# 	# 	fields: ["pk", "sortNumber"]
+# 	# 	queryField: "listPolltopicBySortNumber"
+# 	# )
+# 	@auth(
+# 		rules: [
+# 			{ allow: public, provider: iam, operations: [read] }
+# 			{ allow: groups, groups: ["normal", "mentor"], operations: [read] }
+# 			{ allow: groups, groups: ["admin"] }
+# 			{ allow: owner, ownerField: "owners" }
+# 		]
+# 	) {
+# 	id: ID!
+# 	title: String!
+# 	description: String
+# 	# pollperiod: Pollperiod @connection(name: "PollperiodTopic")
+# 	# pollitems: [Pollitem] @connection(name: "PolltopicItem")
 
-type Pollitem
-	@model
-	@key(
-		name: "PollitemWithSort"
-		fields: ["type", "sortNumber"]
-		queryField: "listPollitemWithSort"
-	)
-	@auth(
-		rules: [
-			{ allow: public, provider: iam, operations: [read] }
-			{ allow: groups, groups: ["admin"] }
-		]
-	) {
-	id: ID!
-	title: String!
-	votecount: Int!
-	fixcount: Int #admin cheating
-	isSuggestion: Boolean
-	polltopic: Polltopic @connection(name: "PolltopicItem")
-	users: [UserBallot] @connection(name: "PollitemUser")
+# 	# for sorting
+# 	pk: String!
+# 	sortNumber: Int
 
-	# for sorting
-	type: String!
-	sortNumber: Int
-}
+# 	owners: [String]
+# }
 
-# mid table for: user-pollitem
-type UserBallot @model(queries: null) {
-	id: ID!
-	userID: ID!
-	user: User! @connection(name: "UserPollitem")
-	PollitemID: ID!
-	Pollitem: Pollitem! @connection(name: "PollitemUser")
-}
+# type Pollitem
+# 	@model
+# 	# @key(
+# 	# 	name: "PollitemBySortNumber"
+# 	# 	fields: ["pk", "sortNumber"]
+# 	# 	queryField: "listPollitemBySortNumber"
+# 	# )
+# 	@auth(
+# 		rules: [
+# 			{ allow: public, provider: iam, operations: [read] }
+# 			{ allow: groups, groups: ["normal", "mentor"], operations: [read] }
+# 			{ allow: groups, groups: ["admin"] }
+# 			{ allow: owner, ownerField: "owners" }
+# 		]
+# 	) {
+# 	id: ID!
+# 	title: String!
+# 	votecount: Int!
+# 	fixcount: Int #admin cheating
+# 	isSuggestion: Boolean
+# 	# polltopic: Polltopic @connection(name: "PolltopicItem")
+# 	# users: [UserBallot] @connection(name: "PollitemUser")
 
-# **********************************************************************************
-# ***************************************** Phase 2 & 3 ****************************
-# **********************************************************************************
+# 	# for sorting
+# 	pk: String!
+# 	sortNumber: Int
 
-# ========================================= organization and inventation
+# 	owners: [String]
+# }
 
-type Invitation @model {
-	id: ID!
-	# dafaultFriends: [User] @connection #试一下这样存的是不是ID
-	# fromUser: User @connection
-	inviteToken: String!
-}
+# # mid table for: user-pollitem
+# type UserBallot
+# 	@model(queries: null)
+# 	@auth(
+# 		rules: [
+# 			{ allow: public, provider: iam, operations: [read] }
+# 			{ allow: groups, groups: ["normal", "mentor"], operations: [read] }
+# 			{ allow: groups, groups: ["admin"] }
+# 		]
+# 	) {
+# 	id: ID!
+# 	userID: ID!
+# 	# user: User! @connection(name: "UserPollitem")
+# 	PollitemID: ID!
+# 	# Pollitem: Pollitem! @connection(name: "PollitemUser")
+# }
 
-# 组织
-type Organization @model {
-	# @auth(
-	# 	rules: [
-	# 		{ allow: public, operations: [read] }
-	# 		{ allow: owner}
-	# 		{ allow: groups, groups: ["admin"] },
-	# 	]
-	# )
-	id: ID!
-	name: String!
-	brief: String
-	logo: Picture
-	bp: S3Object
-	tags: [String] # 可以手动输入
-	members: [UserOrganization] @connection(name: "OrgUser")
-}
+# # **********************************************************************************
+# # ***************************************** Phase 2 & 3 ****************************
+# # **********************************************************************************
 
-# m2m
-type UserOrganization @model(queries: null) {
-	id: ID!
-	userID: ID!
-	user: User! @connection(name: "UserOrg")
-	organizationID: ID!
-	organization: Organization! @connection(name: "OrgUser")
-}
+# # ========================================= organization and inventation
+
+# type Invitation
+# 	@model
+# 	@auth(
+# 		rules: [
+# 			{ allow: public, provider: iam, operations: [read] }
+# 			{ allow: groups, groups: ["normal", "mentor"], operations: [read] }
+# 			{ allow: groups, groups: ["admin"] }
+# 			{ allow: owner, ownerField: "owners" }
+# 		]
+# 	) {
+# 	id: ID!
+# 	# dafaultFriends: [User] @connection #试一下这样存的是不是ID
+# 	# fromUser: User @connection
+# 	inviteToken: String!
+# }
+
+# # 组织
+# type Organization
+# 	@model
+# 	# @key(
+# 	# 	name: "OrganizationByCreatedAt"
+# 	# 	fields: ["pk", "createdAt"]
+# 	# 	queryField: "listOrganizationByCreatedAt"
+# 	# )
+# 	@auth(
+# 		rules: [
+# 			{ allow: public, provider: iam, operations: [read] }
+# 			{ allow: groups, groups: ["normal", "mentor"], operations: [read] }
+# 			{ allow: groups, groups: ["admin"] }
+# 			{ allow: owner, ownerField: "owners" }
+# 		]
+# 	) {
+# 	id: ID!
+# 	name: String!
+# 	brief: String
+# 	logo: Picture
+# 	bp: S3Object
+# 	tags: [String] # 可以手动输入
+# 	# members: [UserOrganization] @connection(name: "OrgUser")
+
+# 	# for sorting
+# 	pk: String!
+# 	createdAt: AWSDateTime!
+
+# 	owners: [String]
+# }
+
+# # m2m
+# type UserOrganization @model(queries: null) 
+# 	@auth(
+# 		rules: [
+# 			{ allow: groups, groups: ["admin"] }
+# 			{ allow: owner, ownerField: "userID" }
+# 		]
+# 	) {
+# 	id: ID!
+# 	userID: ID!
+# 	# user: User! @connection(name: "UserOrg")
+# 	organizationID: ID!
+# 	# organization: Organization! @connection(name: "OrgUser")
+# }
 
 # Tag是搜索用的，纯文本，这个仅作为下拉列表管理用
-type Tag @model {
+type Tag
+	@model
+	@key(
+		name: "TagOrderbySortNumber"
+		fields: ["pk", "sortNumber"]
+		queryField: "listTagOrderbySortNumber"
+	)
+	@auth(
+		rules: [
+			{ allow: public, provider: iam, operations: [read] }
+			{ allow: groups, groups: ["normal", "mentor"], operations: [read] }
+			{ allow: groups, groups: ["admin"] }
+			{ allow: owner, ownerField: "owners" }
+		]
+	) {
 	id: ID!
 	name: String!
 	isActive: Boolean
+
+	# for sorting
+	pk: String!
+	sortNumber: Int
+
+	owners: [String]
 }
 # ========================================= social
 # 留言
@@ -231,88 +315,141 @@ type Tag @model {
 # https://www.ctolib.com/aws-samples-aws-appsync-chat.html
 
 # virtual entity, used to connect user with user for messaging
-type Conversation
-	@model(
-		mutations: { create: "createConvo" }
-		queries: { get: "getConvo" }
-		subscriptions: null
-	)
-	@auth(rules: [{ allow: owner, ownerField: "members" }]) {
-	id: ID!
-	messages: [Message] @connection(name: "ConvoMsgs", sortField: "createdAt")
-	users: [ConversationUser] @connection(name: "ConvUser")
-
-	# used to set auth
-	members: [String!]!
-}
-
-# #
-type Message
-	@model(subscriptions: null, queries: null)
-	@auth(rules: [{ allow: owner, ownerField: "authorId" }]) {
-	id: ID!
-	content: String!
-	authorId: String!
-	author: User @connection(name: "UserMessages", keyField: "authorId")
-	messageConversationId: ID!
-	conversation: Conversation! @connection(name: "ConvoMsgs")
-	createdAt: AWSDateTime!
-}
-
-# m2m
-type ConversationUser @model(queries: null) {
-	id: ID!
-	userID: ID!
-	user: User! @connection(name: "UserConv")
-	conversationID: ID!
-	conversation: Conversation! @connection(name: "ConvUser")
-}
-
-# type Subscription {
-# 	onCreateConvoLink(convoLinkUserId: ID!): ConvoLink
-# 		@aws_subscribe(mutations: ["createConvoLink"])
-# 	onCreateMessage(messageConversationId: ID!): Message
-# 		@aws_subscribe(mutations: ["createMessage"])
-# }
-
-# ======================= notification
-type Notification @model {
-	id: ID!
-	content: String!
-	type: String! # announce/remind/message
-	action: String! # message, follow, newevent
-	receiverID: ID!
-	receiver: User! @connection(fields: ["receiverID"])
-	sender: User @connection # who triggers the notification
-	isRead: Boolean # move to redis later
-}
-
-# type NotificationSubscribe @model {
+# type Conversation
+# 	@model(
+# 		mutations: { create: "createConvo" }
+# 		queries: { get: "getConvo" }
+# 		subscriptions: null
+# 	)
+# 	@auth(rules: [{ allow: owner, ownerField: "owners" }]) {
 # 	id: ID!
-# 	action: String
-# 	user: User
+# 	# messages: [Message] @connection(name: "ConvoMsgs", sortField: "createdAt")
+# 	# users: [ConversationUser] @connection(name: "ConvUser")
+
+# 	# for sorting
+# 	createdAt: AWSDateTime!
+
+# 	# used to set auth
+# 	owners: [String!]!
 # }
 
-# 视频
-# 视频是model. 前期主要是外链
-type Video @model {
-	id: ID!
-	name: String!
-	brief: String
-	url: String!
-	preview: Picture
-	author: User @connection(name: "UserVideo")
-	createdAt: AWSDateTime!
-}
+# # virtual entity, no @key, will be sorted from Conversation
+# type Message
+# 	@model(subscriptions: null, queries: null)
+# 	@auth(rules: [{ allow: owner, ownerField: "authorId" }]) {
+# 	id: ID!
+# 	content: String!
+# 	authorId: String!
+# 	# author: User @connection(name: "UserMessages", keyField: "authorId")
+# 	messageConversationId: ID!
+# 	# conversation: Conversation! @connection(name: "ConvoMsgs")
 
-# ======================= 用来存储图片，bp之类的
+# 	# for sorting
+# 	createdAt: AWSDateTime!
+
+# 	owners: [String] # redundant, currently not used
+# }
+
+# # virtual entity, m2m
+# type ConversationUser @model(queries: null) 
+# 	@auth(
+# 		rules: [
+# 			{ allow: groups, groups: ["admin"] }
+# 			{ allow: owner, ownerField: "userID" }
+# 		]
+# 	) {
+# 	id: ID!
+# 	userID: ID!
+# 	# user: User! @connection(name: "UserConv")
+# 	conversationID: ID!
+# 	# conversation: Conversation! @connection(name: "ConvUser")
+# }
+
+# # type Subscription {
+# # 	onCreateConvoLink(convoLinkUserId: ID!): ConvoLink
+# # 		@aws_subscribe(mutations: ["createConvoLink"])
+# # 	onCreateMessage(messageConversationId: ID!): Message
+# # 		@aws_subscribe(mutations: ["createMessage"])
+# # }
+
+# # ======================= notification
+# type Notification
+# 	@model
+# 	# @key(
+# 	# 	name: "NotificationByCreatedAt"
+# 	# 	fields: ["pk", "createdAt"]
+# 	# 	queryField: "listNotificationByCreatedAt"
+# 	# )
+# 	@auth(
+# 		rules: [
+# 			{ allow: public, provider: iam, operations: [read] }
+# 			{ allow: groups, groups: ["normal", "mentor"], operations: [read] }
+# 			{ allow: groups, groups: ["admin"] }
+# 			{ allow: owner, ownerField: "owners" }
+# 		]
+# 	) {
+# 	id: ID!
+# 	content: String!
+# 	notificationType: String! # announce/remind/message
+# 	action: String! # message, follow, newevent
+# 	receiverID: ID!
+# 	# receiver: User! @connection(fields: ["receiverID"])
+# 	# sender: User @connection # who triggers the notification
+# 	isRead: Boolean # move to redis later
+
+# 	# for sorting
+# 	pk: String!
+# 	createdAt: AWSDateTime!
+
+# 	owners: [String]
+# }
+
+# # type NotificationSubscribe @model {
+# # 	id: ID!
+# # 	action: String
+# # 	user: User
+# # }
+
+# # 视频
+# # 视频是model. 前期主要是外链
+# type Video
+# 	@model
+# 	# @key(
+# 	# 	name: "VideoByCreatedAt"
+# 	# 	fields: ["pk", "createdAt"]
+# 	# 	queryField: "listVideoByCreatedAt"
+# 	# )
+# 	@auth(
+# 		rules: [
+# 			{ allow: public, provider: iam, operations: [read] }
+# 			{ allow: groups, groups: ["normal", "mentor"], operations: [read] }
+# 			{ allow: groups, groups: ["admin"] }
+# 			{ allow: owner, ownerField: "owners" }
+# 		]
+# 	) {
+# 	id: ID!
+# 	name: String!
+# 	brief: String
+# 	url: String!
+# 	preview: Picture
+# 	# author: User @connection(name: "UserVideo")
+# 	tags: [Tag]
+
+# 	# for sorting
+# 	pk: String!
+# 	createdAt: AWSDateTime!
+
+# 	owners: [String]
+# }
+
+# # ======================= 用来存储图片，bp之类的
 type Picture {
 	name: String
 	image: S3Object!
 	preview: S3Object
 }
 
-# 生成preview 需要后台自动
+# # 生成preview 需要后台自动
 type S3Object {
 	bucket: String!
 	region: String!

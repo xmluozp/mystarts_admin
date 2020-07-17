@@ -14,8 +14,8 @@ const tmpAuthList = [
 ]
 
 const guest = ["guestpages"]
-const normaluser = [...guest, "dashboard"]
-const mentor = [...normaluser]
+const normal = [...guest, "dashboard"]
+const mentor = [...normal]
 const admin = [...mentor, "admin"]
 
 
@@ -30,7 +30,7 @@ type PlainObject = Record<string, Primitive>;
 
 export const ROLES: PlainObject = {
     "guest": guest,
-    'normaluser': normaluser,
+    'normal': normal,
     'mentor': mentor,
     'admin': admin,
 };

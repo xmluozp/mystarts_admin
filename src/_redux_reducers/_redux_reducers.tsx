@@ -5,11 +5,12 @@
 import { combineReducers } from "redux";
 
 
-import auth from "./authReducer";
+import auth from './authReducer';
 import loading from "./loadingReducer";
-import alert from "./alertReducer";
-import tag from "./tagReducer";
-import votetopic from "./votetopicReducer"
+import alert from './alertReducer';
+import tag from './tagReducer';
+import votetopic from './votetopicReducer'
+import voteitem from './voteitemReducer'
 
 export default combineReducers({
     authData: auth, // login status
@@ -18,4 +19,5 @@ export default combineReducers({
     
     tagData: tag,
     votetopicData: votetopic,
+    voteitemData: voteitem,
 })

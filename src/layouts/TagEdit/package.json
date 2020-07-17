@@ -1,0 +1,6 @@
+{
+  "name": "TagEdit",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./TagEdit.tsx"
+}

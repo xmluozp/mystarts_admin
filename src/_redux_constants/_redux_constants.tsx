@@ -34,5 +34,6 @@ export const LOADING = {
 // -------------------------
 export const TAG = maker("TAG")
 export const VOTETOPIC = maker("VOTETOPIC")
+export const VOTEITEM = maker("VOTEITEM")
 
-
+// WER

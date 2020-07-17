@@ -1,12 +1,12 @@
 import React, { Suspense } from "react"
-import { HashRouter, Route, Switch, Redirect, Link } from "react-router-dom"
+import { HashRouter, Route, Switch, Redirect } from "react-router-dom"
 
 import { AmplifySignOut } from '@aws-amplify/ui-react'
 
 import { makeStyles } from "@material-ui/core/styles"
 import Drawer from "@material-ui/core/Drawer"
 import CssBaseline from "@material-ui/core/CssBaseline"
-import AppBar from "@material-ui/core/AppBar"
+// import AppBar from "@material-ui/core/AppBar"
 import Toolbar from "@material-ui/core/Toolbar"
 import List from "@material-ui/core/List"
 import ListItem from "@material-ui/core/ListItem"
@@ -64,7 +64,7 @@ interface Props {
 const HubView: React.FC<Props> = ({ routes, userAuth, navs, ...props }) => {
 
 	// otherwise the userAuth is "guest"
-	const isLoggin = true  //userAuth && userAuth.auth.length > 0
+	const isLoggin = userAuth && userAuth.auth.length > 0
 
 	const classes = useStyles(isLoggin)()
 

@@ -1,5 +1,6 @@
 export * from './tag.model'
 export * from './votetopic.model'
+export * from './voteitem.model'
 
 
 
@@ -26,6 +27,11 @@ export * from './votetopic.model'
 
 declare namespace MyTypes {
 
+    // ===============================
+    export type text_behavior = 'edit' | 'create'
+
+
+    // ===============================
     export type resultList = {
         list: any[];
         // count: Number;
@@ -44,9 +50,14 @@ declare namespace MyTypes {
         itemError?: any;
         message?: String;
         error?: String;
+        nestedList?: resultList;
     }
 
+    export type partitionKey = {
+        pkField: string; pkValue: string
+    }
 
+    // export type PlainObject = Record<string, Primitive>;
 }
 
 export default MyTypes

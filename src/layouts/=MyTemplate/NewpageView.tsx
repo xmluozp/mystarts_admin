@@ -7,7 +7,7 @@ import React from 'react';
 interface Props {
     handleOnSubmit: Function;
     onTestLogin:  (event: React.MouseEvent<HTMLButtonElement>) => void;
-    message?: String
+    message?: string
 }
 
 // ------------------------------------------- TODO: accept props from dominator, delete this comment

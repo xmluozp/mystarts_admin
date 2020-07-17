@@ -2,7 +2,7 @@
  * THIS PAGE: main component: Login
  *  ========================================================================== */
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import View from './LoginView'
 
 
@@ -12,8 +12,8 @@ import { authActions as myActions } from '_redux_actions'
 
 interface Props {
     // onTestLogin: (event: React.MouseEvent<HTMLButtonElement>) => void;
-    // message?: String
-    pageName: String
+    // message?: string
+    pageName: string
 }
 
 const Dominator: React.FC<Props> = ({ ...props }) => {

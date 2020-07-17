@@ -16,7 +16,7 @@ import {authActions as myActions} from '_redux_actions'
 
 interface Props {
     onTestLogin:  (event: React.MouseEvent<HTMLButtonElement>) => void;
-	message?: String
+	message?: string
 }
 
 // ------------------------------------------- TODO: change redux props passing in, delete this comment

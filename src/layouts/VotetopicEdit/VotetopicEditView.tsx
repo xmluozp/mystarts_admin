@@ -2,7 +2,7 @@
  * THIS PAGE: view component: vote topic manage
     ==========================================================================*/
 
-import React, { useState } from 'react';
+import React from 'react';
 import MT, { model_Votetopic as dataModel } from '_dataModel'
 // import { Link } from "react-router-dom";
 
@@ -16,16 +16,16 @@ import { Button } from "element-react";
 
 
 interface Props {
+    behavior?: MT.text_behavior;
+    pageName: string;
+    status: string;
+
+    dataLocal: MT.resultList;
     handleSubmit?: (event: React.MouseEvent<HTMLButtonElement>) => void;
     onChange: Function;
-    pageName: String;
-    status: String;
-    dataLocal: MT.resultList;
-    behavior?: String;
 }
 
-// ------------------------------------------- TODO: accept props from dominator, delete this comment
-const View: React.FC<Props> = ({ handleSubmit, onChange, status, dataLocal, pageName, behavior, ...props }: any) => {
+const View: React.FC<Props> = ({ behavior, pageName, status, dataLocal, handleSubmit, onChange, ...props }: any) => {
 
     return (<div>
         <ComTitle>{pageName} - {behavior}</ComTitle>

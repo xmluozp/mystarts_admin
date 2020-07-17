@@ -1,6 +1,6 @@
 {
     "auth": {
-        "mystartsadmin82af1fe0": {
+        "mystartsadmin552eba69": {
             "service": "Cognito",
             "providerPlugin": "awscloudformation",
             "dependsOn": []
@@ -16,7 +16,7 @@
                         {
                             "authenticationType": "AMAZON_COGNITO_USER_POOLS",
                             "userPoolConfig": {
-                                "userPoolId": "authmystartsadmin82af1fe0"
+                                "userPoolId": "authmystartsadmin552eba69"
                             }
                         }
                     ],
@@ -25,47 +25,6 @@
                     }
                 }
             }
-        },
-        "testapi": {
-            "service": "API Gateway",
-            "providerPlugin": "awscloudformation",
-            "dependsOn": [
-                {
-                    "category": "function",
-                    "resourceName": "testapi",
-                    "attributes": [
-                        "Name",
-                        "Arn"
-                    ]
-                }
-            ]
-        },
-        "mystartsapi": {
-            "service": "API Gateway",
-            "providerPlugin": "awscloudformation",
-            "dependsOn": [
-                {
-                    "category": "function",
-                    "resourceName": "mystartsapifunction",
-                    "attributes": [
-                        "Name",
-                        "Arn"
-                    ]
-                }
-            ]
-        }
-    },
-    "storage": {},
-    "function": {
-        "testapi": {
-            "build": true,
-            "providerPlugin": "awscloudformation",
-            "service": "Lambda"
-        },
-        "mystartsapifunction": {
-            "build": true,
-            "providerPlugin": "awscloudformation",
-            "service": "Lambda"
         }
     }
 }

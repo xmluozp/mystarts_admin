@@ -13,10 +13,6 @@ const navs = {
       name: 'Dashboard',
       url: '/dashboard',
       Icon: Brightness5Icon,
-      badge: {
-        variant: 'info',
-        text: 'NEW',
-      },
       auth: ""
     },
     {
@@ -36,20 +32,12 @@ const navs = {
       name: 'Vote Topics',
       url: '/votetopic',
       Icon: Brightness5Icon,
-      badge: {
-        variant: 'info',
-        text: 'NEW',
-      },
       auth: ""
     },
     {
       name: 'Poll Periods',
       url: '/pollperiods',
       Icon: Brightness5Icon,
-      badge: {
-        variant: 'info',
-        text: 'NEW',
-      },
       auth: ""
     },   
 
@@ -66,12 +54,12 @@ const navs = {
     //   Icon: Brightness5Icon,
     //   auth: "admin"
     // },
-    // {
-    //   name: 'Tags',
-    //   url: '/tag',
-    //   Icon: Brightness5Icon,
-    //   auth: "admin"
-    // }, { name: '' },
+    {
+      name: 'Tags',
+      url: '/tag',
+      Icon: Brightness5Icon,
+      auth: ""
+    }, { name: '' },
     // {
     //   name: 'Images',
     //   url: '/test',

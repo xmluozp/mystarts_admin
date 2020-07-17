@@ -1,12 +1,14 @@
 
 /** ==========================================================================
- * THIS PAGE: main component: Newpage
+ * THIS PAGE: main component: vote topics manage
  *  ========================================================================== */
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+
 // *********** redux ***********
 import { connect } from "react-redux"
 
+import MT, {type_Tag} from "_dataModel"
 
 // *********** amplify subscription***********
 // import { onCreateTag, onDeleteTag, onUpdateTag } from "graphql/subscriptions"
@@ -14,63 +16,79 @@ import { connect } from "react-redux"
 
 import { tagActions as myActions } from '_redux_actions'
 import View from './TagView'
+import {alertSuccess, confirmBox} from '_helper'
+
+const BASIC_URL = '/tag'
+
+const STORE_NAME = 'tagData'
+const CONFIRM_MESSAGE_DELETE = 'Are you going to delete?'
+const SUCCESS_MESSAGE_DELETED = 'Item deleted'
+
+
+/*
+============================  ^  ==============================
+===================== customization part  =====================
+============================  ^  ==============================
+*/
 
 interface Props {
     // onMouseEvent: (event: React.MouseEvent<HTMLButtonElement>) => void;
+    pageName?: string;
+    status: string;
+    message?: string;
+    pagination: MT.pagination;
+
+    data: MT.resultList;
+
+    onUpdate: Function;
+    onDelete: Function;
     onGetList: Function;
-    data: any;
-    pageName?: String;
-    message?: String;
 }
 
-const Dominator: React.FC<Props> = ({ onGetList, data, ...props }) => {
+const Dominator: React.FC<Props> = ({status, pagination, data, onUpdate, onDelete, onGetList,  ...props }: any) => {
+
+    // TODO: xxx/?filter='JSONSTRING'
+    // const params = new URLSearchParams(props.location.search)
+    // console.log("params", params.get("filter"))
 
 
-
-    // 测试翻页, 随后移出去
-    const [nextToken, setNextToken] = useState(undefined)
-    const [nextNextToken, setNextNextToken] = useState()
-    const [previousTokens, setPreviousTokens] = useState([])
-
-    const hasNext = !!nextNextToken
-    const hasPrev = previousTokens.length 
-    const limit = 1
-
-
-
+    // ========================== how to subscribe:
     // const afterCreateTag = (...something: any) => {
     //     console.log("triggered!", something)
     // }
 
-    useEffect(() => {
-
-        // nextToken就是取哪一页. prevToken是一个数组，所有翻过的都存起来
-        // 问题是：是否要继续用dynamodb
-        onGetList({
-            limit,
-            nextToken
-        })
-
-
+    // useEffect(() => {
         // const unscribe = amplifySubscribe([
         //     { onAction: onCreateTag, afterAction: afterCreateTag }
         // ])
 
         // return unscribe
-    }, [])
+    // }, [])
 
 
-    const handleOnNextPage = (data: object) => {
-        console.log(data)
-        // call function to dispatch
+
+    const handleDelete = (row: type_Tag) => {
+        confirmBox(CONFIRM_MESSAGE_DELETE, 'warning', ()=> {
+            onDelete(row.id).then(()=>alertSuccess(SUCCESS_MESSAGE_DELETED), ()=>{})
+        })
+    }
+
+    const handleSwitchActive = (row: type_Tag) => {
+        const newTag = {id: row.id, isActive: !row.isActive}
+        onUpdate(newTag)
     }
 
     // ------------------- { pass states and props in }
     const current = {
         ...props,
-        handleOnNextPage,
-        // --------- pass redux actions and states down
-        resultList:data,
+        status,
+        BASIC_URL,
+        // --------- pass redux actions and states dow  
+        onGetList,
+        handleDelete,
+        handleSwitchActive,
+        pagination,
+        data,
     }
 
     return <View {...current} />
@@ -81,11 +99,16 @@ const Dominator: React.FC<Props> = ({ onGetList, data, ...props }) => {
 // ********************  redux ******************** 
 // ************************************************ 
 const myState = (state: any) => ({
-    data: state.tagData.data,
+    data: state[STORE_NAME].data,
+    pagination: state[STORE_NAME].pagination,
+    status: state.loadingData.status
 })
 
 const actionCreators = {
-    onGetList: myActions.getList
+    onGetList: myActions.getList,
+    onClear: myActions.clearList,
+    onUpdate: myActions.update,
+    onDelete: myActions._delete
 }
 
 export default connect(myState, actionCreators)(React.memo(Dominator))

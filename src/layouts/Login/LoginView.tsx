@@ -7,7 +7,10 @@ import React from 'react';
 
 
 // amplify
+import {  Auth} from "aws-amplify"
 import { Authenticator, AmplifyTheme } from "aws-amplify-react"
+import { CognitoHostedUIIdentityProvider } from "@aws-amplify/auth/lib/types";
+
 // import { API, graphqlOperation, Auth, Hub as AmplifyHub } from "aws-amplify"
 // import { withAuthenticator } from '@aws-amplify/ui-react'
 const theme = {
@@ -61,12 +64,17 @@ const signUpConfig = {
 interface Props {
     // handleOnSubmit: Function;
     // onTestLogin:  (event: React.MouseEvent<HTMLButtonElement>) => void;
-    // message?: String
+    // message?: string
 }
 
 const View: React.FC<Props> = () => {
 
-    return <Authenticator theme={theme} signUpConfig={signUpConfig}/>
+    return <div>
+		<button type="button" onClick={() => Auth.federatedSignIn({ provider: CognitoHostedUIIdentityProvider.Google })}>Sign in with google(test)</button>
+		{/* <Authenticator theme={theme} signUpConfig={signUpConfig}/> */}
+	</div>
+	
+	
 }
 
 

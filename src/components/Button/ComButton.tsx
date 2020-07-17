@@ -1,6 +1,6 @@
 
 import React from 'react';
-import scom from './scom'
+// import scom from './scom'
 
 import { Button } from 'element-react'
 import { Link } from "react-router-dom";

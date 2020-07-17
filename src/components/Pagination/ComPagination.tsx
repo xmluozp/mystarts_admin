@@ -1,5 +1,6 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
+// import _ from 'lodash'
 // import styled from 'styled-components'
 // import scom from './scom'
 // import theme from 'assets/jss/theme'
@@ -8,44 +9,65 @@ import { Button } from 'element-react'
 import { Link } from "react-router-dom";
 import MT from '_dataModel'
 
+// import { shallowCompare } from '_helper'
+
 //=== 
 interface Props {
     url: String;
     pagination: MT.pagination;
     onGetList: Function;
     onClear: Function;
-    filter?: any;
+    queryParams?: any;
 }
+
+
+const isEqual = (prevProps, nextProps) => {
+
+    // const equalUrl = prevProps.url === nextProps.url
+
+    // const equalPagination = 
+    //     prevProps.pagination === nextProps.pagination &&
+    //     prevProps.pagination.pageIndex === nextProps.pagination.pageIndex &&
+    //     nextProps.pagination.pages.length
+
+    // const equalQueryParams = shallowCompare(
+    //     prevProps.queryParams,
+    //     nextProps.queryParams) 
+    // const equalUrlParams =
+    //     prevProps.match.params["pageIndex"] === 
+    //     nextProps.match.params["pageIndex"]
+
+
+    // console.log({...prevProps}.pagination, {...nextProps}.pagination)
+    // console.log(prevProps, nextProps)
+    // console.log(_.isEqual(prevProps, nextProps))
+    // console.log(equalUrl && equalPagination && equalQueryParams && equalUrlParams)
+
+    // console.log(equalUrl && equalPagination && equalQueryParams && equalUrlParams)
+
+    return false
+}
+
 
 export const ComPagination: React.FC<Props> = React.memo(({
     url,
     pagination,
     onGetList,
     onClear,
-    filter,
+    queryParams,
     ...props }: any) => {
 
     const { pageIndex, pages } = pagination
     const [loading, setloading] = useState(false)
-    const currentPageIndex: number = props && props.match && props.match.params["pageIndex"] || 0
+    const currentPageIndex: number = (props && props.match && props.match.params["pageIndex"]) || 0
 
     const [sortDirection, setsortDirection] = useState("DESC")
 
-    useEffect(() => {
-
-        readData(currentPageIndex, sortDirection)
-
-        return () => {
-            onClear()
-        }
-
-    }, [currentPageIndex, sortDirection])
-
-    const readData = (currentPageIndex, sortDirection) => {
+    const readData = useCallback((currentPageIndex, sortDirection) => {
         // =============== pagination可以做
         // 需要传：props, onGetList和filter, onClear
         const { pages } = pagination
-        const limit = 8
+        const limit = 2
         let toPage
         let nextToken
         if (currentPageIndex > 0 && !pages[currentPageIndex - 1]) {
@@ -56,17 +78,28 @@ export const ComPagination: React.FC<Props> = React.memo(({
             toPage = currentPageIndex
             nextToken = pages && pages[currentPageIndex - 1]
         }
-        
+
         onGetList({
-            filter,
+            ...queryParams,
             limit,
             nextToken,
-            sortDirection,
-            type: "Set"
-        }, toPage).then(()=> {
+            sortDirection
+        }, toPage).then(() => {
             setloading(false)
         })
-    }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ onGetList, pagination, props.history, url])
+
+    useEffect(() => {
+
+        readData(currentPageIndex, sortDirection)
+
+        return () => {
+            onClear()
+        }
+
+    }, [onClear, readData, currentPageIndex, sortDirection])
 
     const handleSwitchDirection = () => {
 
@@ -97,7 +130,7 @@ export const ComPagination: React.FC<Props> = React.memo(({
             }}
             onClick={handleSwitchDirection} />
 
-        <Button type="info" 
+        <Button type="info"
             style={{
                 borderRadius: "0px 0px 0px 0px",
                 marginRight: -1,
@@ -123,4 +156,4 @@ export const ComPagination: React.FC<Props> = React.memo(({
                 >Next <i className="el-icon-arrow-right el-icon-right"></i></Button>
         }
     </Button.Group>
-}, () => false)
+}, isEqual)

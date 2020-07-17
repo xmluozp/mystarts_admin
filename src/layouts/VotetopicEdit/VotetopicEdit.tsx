@@ -9,13 +9,13 @@ import { alertSuccess } from '_helper'
 
 // *********** redux ***********
 import { connect } from "react-redux"
-import MT, { type_Votetopic as type_item } from "_dataModel"
+import MT from "_dataModel"
 import { votetopicActions as myActions } from '_redux_actions'
 
 
 import View from './VotetopicEditView'
 
-const BASIC_URL = '/votetopic'
+// const BASIC_URL = '/votetopic'
 const STORE_NAME = 'votetopicData'
 const FIELDS_NEED_TO_UPDATE = [
     'id',
@@ -34,36 +34,41 @@ const SUCCESS_MESSAGE_UPDATED = 'Item updated'
 
 interface Props {
     // onMouseEvent: (event: React.MouseEvent<HTMLButtonElement>) => void;
+    behavior?: MT.text_behavior;
+    pageName?: string;
+    status: string;
+    message?: string;
+
     dataGet: MT.resultSingleItem;
-    pageName?: String;
-    message?: String;
-    status: 'create' | 'edit';
+    onGet: Function;
     onClear: Function;
     onUpdate: Function;
     onCreate: Function;
 }
 
-const Dominator: React.FC<Props> = ({ onClear, onGet, onUpdate, onCreate, dataGet, status, behavior, ...props }: any) => {
+const Dominator: React.FC<Props> = ({behavior, status, dataGet, onGet, onClear, onUpdate, onCreate,  ...props }: any) => {
 
-    const id: String = props.match.params["id"]
+    const id: string = props.match.params["id"]
     const [dataLocal, setdataLocal] = useState({})
 
     // get data from id
     useEffect(() => {
         if (behavior === 'edit') onGet(id)
         return onClear
-    }, [id])
+    }, [id, behavior, onGet, onClear])
 
     // insert data to the form
     useEffect(() => {
         if (behavior === 'edit' && dataGet) setdataLocal(dataGet.item)
-    }, [dataGet])
+    }, [dataGet, behavior])
 
     // input onchange
     const onChange = (id, value) => setdataLocal(prevdataLocal => ({ ...prevdataLocal, [id]: value }))
 
     // submit
     const handleSubmit = () => {
+
+        if(!dataLocal) return
 
         // ----------------------- what should update (not all fields are writable) ------------------------ {
         const uploadData = {}

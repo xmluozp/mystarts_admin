@@ -3,14 +3,13 @@
  */
 import React, { lazy as reactLazy } from "react";
 import { format } from 'date-fns';
-
 import { Notification, MessageBox } from "element-react";
-
-
+import { Auth, API, graphqlOperation } from "aws-amplify"
 import { createHashHistory } from 'history';
 
-import { Auth, API, graphqlOperation } from "aws-amplify"
+import MT from '_dataModel'
 import { store } from './store'
+import { keyBy } from "lodash";
 
 // const history = createHashHistory({ forceRefresh: true });
 export const history = createHashHistory();
@@ -92,6 +91,7 @@ export const amplifySubscribe = (onActions: { onAction: any, afterAction: Functi
     }
 }
 
+
 /**
  * Will be used on React.memo, check if needs to render
  * @param objA 
@@ -99,17 +99,34 @@ export const amplifySubscribe = (onActions: { onAction: any, afterAction: Functi
  * @param columns 
  */
 export const shallowCompare = (
-    objA: any, objB: any, columns: string[]
+    objA: any, objB: any, columns?: string[]
 ) => {
 
-    for (let i = 0; i < columns.length; i++) {
-        if (objA[columns[i]] != objB[columns[i]]) {
-            return false;
+    if( objA === objB) return true
+    if(!objA || !objB) return false // if not equal and one is undefined. other will not undefined.
+
+    // if needs to compare particular fields
+    if(columns) {
+        for (let i = 0; i < columns.length; i++) {
+            if (objA[columns[i]] !== objB[columns[i]]) {
+                return false;
+            }
+        }
+    } else { // compare all
+        const keysA = Object.keys(objA) || []
+        const keysB = Object.keys(objB) || []
+        if (keysA.length !==  keysB.length) return false
+        for (let i = 0; i < keysA.length; i++) {
+            if (objA[keysA[i]] !== objB[keysB[i]]) {
+                return false;
+            }
         }
     }
 
     return true;
 }
+
+// ============================== popups:
 
 export const alertError = (message: string, params?: any) => {
     Notification({
@@ -120,7 +137,6 @@ export const alertError = (message: string, params?: any) => {
         ...params
     })
 }
-
 export const alertSuccess = (message: string, params?: any) => {
     Notification({
         title: "Success",
@@ -130,7 +146,6 @@ export const alertSuccess = (message: string, params?: any) => {
         ...params
     })
 }
-
 export const confirmBox = ( message: string, type: "success" | "info" | "warning" | "error", fn: Function) => {
     MessageBox.confirm(message, 'Confirm', {
         type: type,
@@ -142,8 +157,7 @@ export const confirmBox = ( message: string, type: "success" | "info" | "warning
 }
 
 
-
-
+// ============================== converts:
 export const convertDollarsToCents = (price) => (price * 100).toFixed(0)
 export const convertCentsToDollars = (price) => (price / 100).toFixed(2)
 export const formatDate = date => {
@@ -157,6 +171,14 @@ export const formatDateTimeTwoline = date => {
 export const formatDateTime = date => {
     const d = Date.parse(date);
     return format(d, `yyyy-MM-dd HH:mm:ss`)
+}
+
+
+
+// ============================== just used to sorten code:
+
+export const h_singleItemFieldIncrement = (singleItem: MT.resultSingleItem, field, interval:number = 10) => {
+    return singleItem.item && !isNaN(singleItem.item.sortNumber) ? singleItem.item.sortNumber + interval : 0
 }
 
 

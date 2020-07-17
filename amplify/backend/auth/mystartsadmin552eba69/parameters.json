@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "mystartsadmin82af1fe0_identitypool_82af1fe0",
-    "allowUnauthenticatedIdentities": true,
-    "resourceNameTruncated": "mystar82af1fe0",
-    "userPoolName": "mystartsadmin82af1fe0_userpool_82af1fe0",
+    "identityPoolName": "mystartsadmin552eba69_identitypool_552eba69",
+    "allowUnauthenticatedIdentities": false,
+    "resourceNameTruncated": "mystar552eba69",
+    "userPoolName": "mystartsadmin552eba69_userpool_552eba69",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -28,10 +28,10 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "mystar82af1fe0_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "mystar552eba69_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "82af1fe0",
-    "resourceName": "mystartsadmin82af1fe0",
+    "sharedId": "552eba69",
+    "resourceName": "mystartsadmin552eba69",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [
@@ -45,10 +45,17 @@
             "Arn"
         ]
     },
-    "useDefault": "default",
+    "useDefault": "defaultSocial",
     "usernameAttributes": [
         "email"
     ],
     "userPoolGroupList": [],
-    "dependsOn": []
+    "dependsOn": [],
+    "hostedUI": true,
+    "hostedUIDomainName": "mystartsadmind4021a57-d4021a57",
+    "authProvidersUserPool": [
+        "Google"
+    ],
+    "hostedUIProviderMeta": "[{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"sub\"}}]",
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:3000/\"],\"LogoutURLs\":[\"http://localhost:3000/\"]}"
 }

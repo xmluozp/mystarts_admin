@@ -2,15 +2,12 @@
  * THIS PAGE: view component: vote topic manage
     ==========================================================================*/
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from "react-router-dom";
 
 //=== 
 import Grid from "@material-ui/core/Grid";
 import { Button } from 'element-react'
-
-//=== 
-import { API } from 'aws-amplify';
 
 //=== 
 import MT, { model_Votetopic as dataModel } from '_dataModel'
@@ -19,11 +16,17 @@ import { formatDateTime } from '_helper'
 
 
 interface Props {
-    BASIC_URL: String;
+    BASIC_URL:      string;
+
+    pageName:       string;
+    status:         string;
+    pagination:     MT.pagination;
+
+    data:           MT.resultList;
+    onGetList:      Function;
+    onClear:        Function
+
     handleDelete?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-    status: String;
-    pagination: MT.pagination;
-    data: MT.resultList;
 }
 
 // const testLambda = async () => {
@@ -39,23 +42,21 @@ interface Props {
 //     }
 // }
 
+const headCells = [
+    { prop: "createdAt", render: row => formatDateTime(row["createdAt"]) },
+    { prop: "title" },
+    { prop: "description" },
+];
 
 // ------------------------------------------- TODO: accept props from dominator, delete this comment
-const View: React.FC<Props> = ({ BASIC_URL, handleDelete, status, pagination, data, ...props }: any) => {
+const View: React.FC<Props> = ({ BASIC_URL, pageName, status, pagination, data, onGetList, onClear, handleDelete, ...props }) => {
 
     const { list } = data || {}
-
-    const headCells = [
-        { prop: "createdAt", render: row => formatDateTime(row["createdAt"]) },
-        { prop: "title" },
-        { prop: "description" },
-    ];
-
     const CURRENT_URL = `${BASIC_URL}/${pagination.pageIndex}`
 
     const renderButton = (row: any) => {
         return <>
-            <Link to={`${CURRENT_URL}/items/${row.id}`} style={{ marginRight: 10 }}>
+            <Link to={`/voteitem/${row.id}`} style={{ marginRight: 10 }}>
                 <Button
                     type="info"
                     size="small"
@@ -73,13 +74,13 @@ const View: React.FC<Props> = ({ BASIC_URL, handleDelete, status, pagination, da
     }
 
     return (<div>
-        <ComTitle>{props.pageName}</ComTitle>
+        <ComTitle>{pageName}</ComTitle>
         <Grid container spacing={2}>
             <Grid item xs={6}>
                 <ComPagination
                     {...props}
-                    onGetList={props.onGetList}
-                    onClear={props.onClear}
+                    onGetList={onGetList}
+                    onClear={onClear}
                     url={BASIC_URL}
                     pagination={pagination}
                 />

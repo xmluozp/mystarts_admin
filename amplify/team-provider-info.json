@@ -1,19 +1,21 @@
 {
     "dev": {
         "awscloudformation": {
-            "AuthRoleName": "amplify-mystartsadmin-dev-193826-authRole",
-            "UnauthRoleArn": "arn:aws:iam::764521358666:role/amplify-mystartsadmin-dev-193826-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::764521358666:role/amplify-mystartsadmin-dev-193826-authRole",
+            "AuthRoleName": "amplify-mystartsadmin-dev-193959-authRole",
+            "UnauthRoleArn": "arn:aws:iam::764521358666:role/amplify-mystartsadmin-dev-193959-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::764521358666:role/amplify-mystartsadmin-dev-193959-authRole",
             "Region": "us-east-2",
-            "DeploymentBucketName": "amplify-mystartsadmin-dev-193826-deployment",
-            "UnauthRoleName": "amplify-mystartsadmin-dev-193826-unauthRole",
-            "StackName": "amplify-mystartsadmin-dev-193826",
-            "StackId": "arn:aws:cloudformation:us-east-2:764521358666:stack/amplify-mystartsadmin-dev-193826/06385530-b5b3-11ea-8c90-026789fff09e",
-            "AmplifyAppId": "d2kcs679avdq02"
+            "DeploymentBucketName": "amplify-mystartsadmin-dev-193959-deployment",
+            "UnauthRoleName": "amplify-mystartsadmin-dev-193959-unauthRole",
+            "StackName": "amplify-mystartsadmin-dev-193959",
+            "StackId": "arn:aws:cloudformation:us-east-2:764521358666:stack/amplify-mystartsadmin-dev-193959/b79330d0-c633-11ea-a579-0608930970a0",
+            "AmplifyAppId": "d2hp236fabyqlq"
         },
         "categories": {
             "auth": {
-                "mystartsadmin82af1fe0": {}
+                "mystartsadmin552eba69": {
+                    "hostedUIProviderCreds": "[{\"ProviderName\":\"Google\",\"client_id\":\"320243778158-jtgi24iv9le3bjtckv0vje776sepi0uq.apps.googleusercontent.com\",\"client_secret\":\"CbBY2brlZ2c9VfSewzTU7Zbp\"}]"
+                }
             }
         }
     }

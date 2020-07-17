@@ -1,16 +1,17 @@
 import graphql from "graphql-tag"
-import gql from "graphql-tag"
+
 
 // mutations
 
 // update user from auth to database
 const registerUser = `
-  mutation($id: ID, $email: String!, $familyName: String!, $givenName: String!) {
+  mutation($id: ID, $email: String!, $familyName: String!, $givenName: String!, $pk: String!) {
     registerUser(input: {
       id: $id,
       email: $email,
       familyName: $familyName,
-      givenName: $givenName
+	  givenName: $givenName,
+	  pk: $pk
     }) {
       id familyName givenName email
     }

@@ -3,7 +3,7 @@
  * THIS PAGE: main component: vote topics manage
  *  ========================================================================== */
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 // *********** redux ***********
 import { connect } from "react-redux"
@@ -32,17 +32,17 @@ const SUCCESS_MESSAGE_DELETED = 'Item deleted'
 */
 
 interface Props {
-    // onMouseEvent: (event: React.MouseEvent<HTMLButtonElement>) => void;
-    data: MT.resultList;
+    pageName?: string;
+    status: string;
+    message?: string;
     pagination: MT.pagination;
-    pageName?: String;
-    message?: String;
-    status: String;
+
+    data: MT.resultList;
     onDelete: Function;
     onGetList: Function;
 }
 
-const Dominator: React.FC<Props> = ({data, pagination, status, onDelete, onGetList, ...props }: any) => {
+const Dominator: React.FC<Props> = ({status, pagination, data, onDelete, onGetList, ...props }: any) => {
 
     // TODO: xxx/?filter='JSONSTRING'
     // const params = new URLSearchParams(props.location.search)
