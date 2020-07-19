@@ -1,9 +1,26 @@
 {
+    "function": {
+        "mystartsadminf252f705PostConfirmation": {
+            "build": true,
+            "providerPlugin": "awscloudformation",
+            "service": "Lambda"
+        }
+    },
     "auth": {
-        "mystartsadmin552eba69": {
+        "mystartsadminf252f705": {
             "service": "Cognito",
             "providerPlugin": "awscloudformation",
-            "dependsOn": []
+            "dependsOn": [
+                {
+                    "category": "function",
+                    "resourceName": "mystartsadminf252f705PostConfirmation",
+                    "triggerProvider": "Cognito",
+                    "attributes": [
+                        "Arn",
+                        "Name"
+                    ]
+                }
+            ]
         }
     },
     "api": {
@@ -16,7 +33,7 @@
                         {
                             "authenticationType": "AMAZON_COGNITO_USER_POOLS",
                             "userPoolConfig": {
-                                "userPoolId": "authmystartsadmin552eba69"
+                                "userPoolId": "authmystartsadminf252f705"
                             }
                         }
                     ],

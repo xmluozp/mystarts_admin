@@ -46,7 +46,7 @@ const {
 // query by votetopic, the votetopicID is dynamic partition key
 export const voteitemService = {
     getList: getList(),
-    getNested: getNested(getVotetopic, "getVotetopic", "voteitems", "votetopicID"),
+    getNested: getNested(getVotetopic, "getVotetopic", "voteitems", "votetopicID"),     
     getFirst: getFirst(defaultPK),
     get: get(),
     create: create(),

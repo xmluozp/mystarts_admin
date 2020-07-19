@@ -1,0 +1,16 @@
+{
+  "trigger": true,
+  "modules": [
+    "add-to-group"
+  ],
+  "parentResource": "mystartsadminf252f705",
+  "functionName": "mystartsadminf252f705PostConfirmation",
+  "resourceName": "mystartsadminf252f705PostConfirmation",
+  "parentStack": "auth",
+  "triggerEnvs": [],
+  "triggerDir": "A:\\develop\\nodejs\\X64\\node_global\\node_modules\\@aws-amplify\\cli\\node_modules\\amplify-category-auth\\provider-utils\\awscloudformation\\utils/../triggers/PostConfirmation",
+  "triggerTemplate": "PostConfirmation.json.ejs",
+  "roleName": "mystartsadminf252f705PostConfirmation",
+  "skipEdit": true,
+  "GROUP": "normal"
+}

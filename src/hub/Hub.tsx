@@ -13,11 +13,13 @@ import CONST from "_const"
 import { authFilterForRoutes, navsFilterForRoutes } from "./_routes/auth"
 
 import View from './HubView'
+import {getAuthData} from '_helper'
 // import { title } from "process"
 
 
 // *********** amplify ***********
-import { API, graphqlOperation, Auth, Hub as AmplifyHub } from "aws-amplify"
+import { API, Hub as AmplifyHub } from "aws-amplify"
+import { GRAPHQL_AUTH_MODE } from "@aws-amplify/api-graphql/lib/types";
 import { getUser, registerUser } from 'graphql.js'
 
 // *********** redux ***********
@@ -52,14 +54,9 @@ const Hub: React.FC<Props> = ({ onCacheIn, onCacheOut, userAuth, ...props }) => 
 		const cacheUser = async () => {
 			try {
 				// get user id (看有没有登录)
-				const authData: any = await Auth.currentAuthenticatedUser()
+				const authData: any = await getAuthData()
+				if (authData) cacheUserData(authData)
 
-				// console.log("authData, ", authData)
-
-				// 有登录就从user表取数据, 否则action: clearCacheUser
-				if (authData) {
-					cacheUserData(authData)
-				}
 			} catch (error) {
 				console.error("No user ", error)
 				onCacheOut && onCacheOut()
@@ -77,15 +74,21 @@ const Hub: React.FC<Props> = ({ onCacheIn, onCacheOut, userAuth, ...props }) => 
 
 				// get groups from cognito
 				let groups = signInData.signInUserSession.idToken.payload["cognito:groups"]
+				
+				const result: any = await API.graphql({
+					query: getUser, 
+					variables: getUserInput, 
+					authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS})
 
-				const result: any = await API.graphql(graphqlOperation(getUser, getUserInput))
 				const { data } = result
 
 				let userAuth;
 
 				// TODO，过后要改成在lambda里面通过trigger自动添加
 
-				if (data.getUser) {
+				if (!signInData.attributes) {
+
+				}else if (data.getUser) {
 					userAuth = data.getUser
 				} else {
 					// default: id, email
@@ -100,8 +103,7 @@ const Hub: React.FC<Props> = ({ onCacheIn, onCacheOut, userAuth, ...props }) => 
 					const result: any = await API.graphql({
 						query: registerUser,
 						variables: registerUserInput,
-						// @ts-ignore
-						authMode: "AMAZON_COGNITO_USER_POOLS"
+						authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
 					})
 
 					// const result: any = await API.graphql(graphqlOperation(registerUser, { ...registerUserInput }))
@@ -164,7 +166,7 @@ const Hub: React.FC<Props> = ({ onCacheIn, onCacheOut, userAuth, ...props }) => 
 		return () => {
 			AmplifyHub.remove("auth", onHubCapsule)
 		}
-	}, [onCacheIn, onCacheOut])
+	}, [])
 
 
 	return <View

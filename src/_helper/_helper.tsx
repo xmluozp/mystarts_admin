@@ -91,6 +91,16 @@ export const amplifySubscribe = (onActions: { onAction: any, afterAction: Functi
     }
 }
 
+export const getAuthData = async () => {
+    try {
+      const authData = await Auth.currentAuthenticatedUser()    
+      return authData
+    } catch (error) {
+      console.log("no current user", error)
+      return undefined
+    }
+}
+
 
 /**
  * Will be used on React.memo, check if needs to render

@@ -9,6 +9,18 @@ Parameters:
     Type: String
   
   
+  
+  
+  functionmystartsadminf252f705PostConfirmationArn: 
+    Type: String
+    Default: functionmystartsadminf252f705PostConfirmationArn
+  
+  functionmystartsadminf252f705PostConfirmationName: 
+    Type: String
+    Default: functionmystartsadminf252f705PostConfirmationName
+  
+  
+  
 
     
   identityPoolName:
@@ -85,19 +97,16 @@ Parameters:
                                       
   useDefault:
     Type: String
-                      
-  usernameAttributes:
-    Type: CommaDelimitedList
-              
-  userPoolGroupList:
-    Type: CommaDelimitedList
-              
-  dependsOn:
-    Type: CommaDelimitedList
-        
+                
   hostedUI:
     Type: String
-            
+                    
+  usernameAttributes:
+    Type: CommaDelimitedList
+      
+  triggers:
+    Type: String
+              
   hostedUIDomainName:
     Type: String
                       
@@ -112,7 +121,19 @@ Parameters:
               
   oAuthMetadata:
     Type: String
+                      
+  userPoolGroupList:
+    Type: CommaDelimitedList
                         
+  parentStack:
+    Type: String
+                
+  permissions:
+    Type: CommaDelimitedList
+              
+  dependsOn:
+    Type: CommaDelimitedList
+    
 Conditions:
   ShouldNotCreateEnvResources: !Equals [ !Ref env, NONE ]
 
@@ -124,7 +145,7 @@ Resources:
   # Created to allow the UserPool SMS Config to publish via the Simple Notification Service during MFA Process
     Type: AWS::IAM::Role
     Properties:
-      RoleName: !If [ShouldNotCreateEnvResources, 'mystar552eba69_sns-role', !Join ['',[ 'sns', '552eba69', !Select [3, !Split ['-', !Ref 'AWS::StackName']], '-', !Ref env]]]
+      RoleName: !If [ShouldNotCreateEnvResources, 'mystarf252f705_sns-role', !Join ['',[ 'sns', 'f252f705', !Select [3, !Split ['-', !Ref 'AWS::StackName']], '-', !Ref env]]]
       AssumeRolePolicyDocument: 
         Version: "2012-10-17"
         Statement: 
@@ -136,10 +157,10 @@ Resources:
               - "sts:AssumeRole"
             Condition: 
               StringEquals:
-                sts:ExternalId: mystar552eba69_role_external_id
+                sts:ExternalId: mystarf252f705_role_external_id
       Policies: 
         - 
-          PolicyName: mystar552eba69-sns-policy
+          PolicyName: mystarf252f705-sns-policy
           PolicyDocument: 
             Version: "2012-10-17"
             Statement: 
@@ -164,7 +185,30 @@ Resources:
           Required: true
           Mutable: true
         
+        -
+          Name: family_name
+          Required: true
+          Mutable: true
+        
+        -
+          Name: given_name
+          Required: true
+          Mutable: true
+        
       
+      
+      LambdaConfig:
+        
+        
+        
+        
+        
+          PostConfirmation: !Ref functionmystartsadminf252f705PostConfirmationArn
+        
+        
+        
+        
+        
       
       
       AutoVerifiedAttributes: !Ref autoVerifiedAttributes
@@ -187,15 +231,68 @@ Resources:
       SmsVerificationMessage: !Ref smsVerificationMessage
       SmsConfiguration: 
         SnsCallerArn: !GetAtt SNSRole.Arn
-        ExternalId: mystar552eba69_role_external_id
+        ExternalId: mystarf252f705_role_external_id
     
+  
+    
+    
+  
+    
+  
+  UserPoolPostConfirmationLambdaInvokePermission: 
+    Type: "AWS::Lambda::Permission"
+    DependsOn: UserPool
+    Properties: 
+      Action: "lambda:invokeFunction"
+      Principal: "cognito-idp.amazonaws.com"
+      FunctionName: !Ref functionmystartsadminf252f705PostConfirmationName
+      SourceArn: !GetAtt UserPool.Arn
+    
+  
+  
+   
+    
+  # Updating lambda role with permissions to Cognito
+  
+  
+  mystartsadminf252f705PostConfirmationAddToGroupCognito:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: mystartsadminf252f705PostConfirmationAddToGroupCognito
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action:
+            
+              - cognito-idp:AdminAddUserToGroup
+            
+              - cognito-idp:GetGroup
+            
+              - cognito-idp:CreateGroup
+            
+            
+            
+            Resource: !GetAtt
+            
+              - UserPool
+            
+              - Arn
+            
+            
+            
+
+      Roles:
+        - !Join ['',["mystartsadminf252f705PostConfirmation", '-', !Ref env]]
+  
+  
   
   UserPoolClientWeb:
   # Created provide application access to user pool
   # Depends on UserPool for ID reference
     Type: "AWS::Cognito::UserPoolClient"
     Properties:
-      ClientName: mystar552eba69_app_clientWeb
+      ClientName: mystarf252f705_app_clientWeb
       
       RefreshTokenValidity: !Ref userpoolClientRefreshTokenValidity
       UserPoolId: !Ref UserPool
@@ -205,7 +302,7 @@ Resources:
   # Depends on UserPool for ID reference
     Type: "AWS::Cognito::UserPoolClient"
     Properties:
-      ClientName: mystar552eba69_app_client
+      ClientName: mystarf252f705_app_client
       
       GenerateSecret: !Ref userpoolClientGenerateSecret
       RefreshTokenValidity: !Ref userpoolClientRefreshTokenValidity
@@ -216,7 +313,7 @@ Resources:
   # Created to execute Lambda which gets userpool app client config values
     Type: 'AWS::IAM::Role'
     Properties:
-      RoleName: !If [ShouldNotCreateEnvResources, !Ref userpoolClientLambdaRole, !Join ['',['upClientLambdaRole', '552eba69', !Select [3, !Split ['-', !Ref 'AWS::StackName']], '-', !Ref env]]]
+      RoleName: !If [ShouldNotCreateEnvResources, !Ref userpoolClientLambdaRole, !Join ['',['upClientLambdaRole', 'f252f705', !Select [3, !Split ['-', !Ref 'AWS::StackName']], '-', !Ref env]]]
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
         Statement:
@@ -270,7 +367,7 @@ Resources:
   # Marked as depending on UserPoolClientRole for easier to understand CFN sequencing
     Type: 'AWS::IAM::Policy'
     Properties:
-      PolicyName: mystar552eba69_userpoolclient_lambda_iam_policy
+      PolicyName: mystarf252f705_userpoolclient_lambda_iam_policy
       Roles: 
         - !Ref UserPoolClientRole
       PolicyDocument:
@@ -287,7 +384,7 @@ Resources:
   # Marked as depending on UserPoolClientLambdaPolicy for easier to understand CFN sequencing
     Type: 'AWS::IAM::Policy'
     Properties:
-      PolicyName: mystar552eba69_userpoolclient_lambda_log_policy
+      PolicyName: mystarf252f705_userpoolclient_lambda_log_policy
       Roles: 
         - !Ref UserPoolClientRole
       PolicyDocument:
@@ -674,7 +771,7 @@ Resources:
   # Always created
     Type: AWS::Cognito::IdentityPool
     Properties: 
-      IdentityPoolName: !If [ShouldNotCreateEnvResources, 'mystartsadmin552eba69_identitypool_552eba69', !Join ['',['mystartsadmin552eba69_identitypool_552eba69', '__', !Ref env]]]
+      IdentityPoolName: !If [ShouldNotCreateEnvResources, 'mystartsadminf252f705_identitypool_f252f705', !Join ['',['mystartsadminf252f705_identitypool_f252f705', '__', !Ref env]]]
       
       CognitoIdentityProviders:
         - ClientId:  !Ref UserPoolClient

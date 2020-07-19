@@ -31,9 +31,14 @@ type User
 	@auth(
 		rules: [
 			{ allow: public, provider: iam, operations: [read] }
-			{ allow: groups, groups: ["normal", "mentor"], operations: [read] }
-			{ allow: groups, groups: ["admin"] }
-			{ allow: owner, ownerField: "id" }
+			{
+				allow: groups
+				provider: userPools
+				groups: ["normal", "mentor"]
+				operations: [read]
+			}
+			{ allow: groups, provider: userPools, groups: ["admin"] }
+			{ allow: owner, provider: userPools, ownerField: "id", identityClaim:"sub"  }
 		]
 	) {
 	id: ID!
@@ -65,16 +70,21 @@ type Votetopic
 	@auth(
 		rules: [
 			{ allow: public, provider: iam, operations: [read] }
-			{ allow: groups, groups: ["normal", "mentor"], operations: [read] }
-			{ allow: groups, groups: ["admin"] }
-			{ allow: owner, ownerField: "owners" }
+			{
+				allow: groups
+				provider: userPools
+				groups: ["normal", "mentor"]
+				operations: [read]
+			}
+			{ allow: groups, provider: userPools, groups: ["admin"] }
+			{ allow: owner, provider: userPools, ownerField: "owners", identityClaim:"sub" }
 		]
-	)
-	 {
+	) {
 	id: ID!
 	title: String!
 	description: String
-	voteitems: [Voteitem] @connection(keyName: "itemByVotetopic",  fields: ["id"])
+	voteitems: [Voteitem]
+		@connection(keyName: "itemByVotetopic", fields: ["id"])
 
 	# for sorting
 	pk: String!
@@ -90,7 +100,7 @@ type Voteitem
 		name: "itemByVotetopic"
 		fields: ["votetopicID", "sortNumber"]
 		queryField: "listVoteitemByVotetopic"
-	)
+	) 
 	@auth(
 		rules: [
 			{ allow: public, provider: iam, operations: [read] }
@@ -103,7 +113,7 @@ type Voteitem
 	title: String!
 	votetopicID: ID!
 	votetopic: Votetopic @connection(fields: ["votetopicID"])
-	
+
 	isActive: Boolean
 
 	# for sorting
@@ -269,7 +279,7 @@ type Voteitem
 # }
 
 # # m2m
-# type UserOrganization @model(queries: null) 
+# type UserOrganization @model(queries: null)
 # 	@auth(
 # 		rules: [
 # 			{ allow: groups, groups: ["admin"] }
@@ -296,7 +306,7 @@ type Tag
 			{ allow: public, provider: iam, operations: [read] }
 			{ allow: groups, groups: ["normal", "mentor"], operations: [read] }
 			{ allow: groups, groups: ["admin"] }
-			{ allow: owner, ownerField: "owners" }
+			{ allow: owner, ownerField: "owners", identityClaim:"sub"}
 		]
 	) {
 	id: ID!
@@ -351,7 +361,7 @@ type Tag
 # }
 
 # # virtual entity, m2m
-# type ConversationUser @model(queries: null) 
+# type ConversationUser @model(queries: null)
 # 	@auth(
 # 		rules: [
 # 			{ allow: groups, groups: ["admin"] }

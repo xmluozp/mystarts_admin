@@ -4,7 +4,7 @@
 import { services } from './_maker'
 import MT from "_dataModel"
 
-import { listVotetopics, listVotetopicOrderbyCreatedAt, getVotetopic } from "graphql/queries"
+import { listVotetopicOrderbyCreatedAt, getVotetopic } from "graphql/queries"
 import { updateVotetopic, createVotetopic, deleteVotetopic } from "graphql/mutations"
 
 const CRUD = {

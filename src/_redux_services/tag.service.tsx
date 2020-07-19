@@ -4,7 +4,7 @@
 import { services } from './_maker'
 import MT from '_dataModel'
 
-import { listTags, listTagOrderbySortNumber, getTag } from "graphql/queries"
+import { listTagOrderbySortNumber, getTag } from "graphql/queries"
 import { updateTag, createTag, deleteTag } from "graphql/mutations"
 
 const CRUD = {

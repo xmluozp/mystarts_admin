@@ -18,8 +18,8 @@ const VotetopicEdit = React.lazy(() => import("layouts/VotetopicEdit"))
 const Voteitem = React.lazy(() => import("layouts/Voteitem"))
 const VoteitemEdit = React.lazy(() => import("layouts/VoteitemEdit"))
 
-// const Tag = React.lazy(() => import("layouts/Tag"))
-// const TagEdit = React.lazy(() => import("layouts/TagEdit"))
+const Tag = React.lazy(() => import("layouts/Tag"))
+const TagEdit = React.lazy(() => import("layouts/TagEdit"))
 
 const Page404 = React.lazy(() => import("layouts/PageError"))
 const Test = React.lazy(() => import("layouts/Test"))
@@ -37,10 +37,10 @@ export const routes = [
     { path: "/login", exact: true, name: "Login", component: Login },
     { path: "/dashboard", exact: true, name: "Dashboard", component: Dashboard, auth: "dashboard" },
 
-    // { path: "/tag", exact: true, name: "Tags Management", component: Tag },
-    // { path: "/tag/:pageIndex", exact: true, name: "Tags Management", component: Tag },
-    // { path: "/tag/:pageIndex/edit/:id", exact: true, name: "Tags Management", component: TagEdit, props: { behavior: "edit" } },
-    // { path: "/tag/:pageIndex/create/", exact: true, name: "Tags Management", component: TagEdit, props: { behavior: "create" } },
+    { path: "/tag", exact: true, name: "Tags Management", component: Tag },
+    { path: "/tag/:pageIndex", exact: true, name: "Tags Management", component: Tag },
+    { path: "/tag/:pageIndex/edit/:id", exact: true, name: "Tags Management", component: TagEdit, props: { behavior: "edit" } },
+    { path: "/tag/:pageIndex/create/", exact: true, name: "Tags Management", component: TagEdit, props: { behavior: "create" } },
 
     { path: "/votetopic", exact: true, name: "Vote Management", component: Votetopic },
     { path: "/votetopic/:pageIndex", exact: true, name: "Vote Management", component: Votetopic },

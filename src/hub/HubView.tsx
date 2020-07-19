@@ -1,7 +1,9 @@
 import React, { Suspense } from "react"
 import { HashRouter, Route, Switch, Redirect } from "react-router-dom"
 
-import { AmplifySignOut } from '@aws-amplify/ui-react'
+// import { AmplifySignOut } from '@aws-amplify/ui-react'
+
+import {Auth} from 'aws-amplify'
 
 import { makeStyles } from "@material-ui/core/styles"
 import Drawer from "@material-ui/core/Drawer"
@@ -111,7 +113,7 @@ const HubView: React.FC<Props> = ({ routes, userAuth, navs, ...props }) => {
 					</ListItem>
 
 				</List>
-				<List><AmplifySignOut /></List>
+				<List><button onClick = {() => {Auth.signOut()}}>sign out</button></List>
 			</Drawer>
 			}
 

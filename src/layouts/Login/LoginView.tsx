@@ -71,6 +71,8 @@ const View: React.FC<Props> = () => {
 
     return <div>
 		<button type="button" onClick={() => Auth.federatedSignIn({ provider: CognitoHostedUIIdentityProvider.Google })}>Sign in with google(test)</button>
+		<button type="button" onClick={() => Auth.signOut()}>Sign out</button>
+		
 		{/* <Authenticator theme={theme} signUpConfig={signUpConfig}/> */}
 	</div>
 	
