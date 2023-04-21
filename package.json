@@ -16,7 +16,7 @@
     "@types/styled-components": "^5.1.0",
     "aws-amplify": "^3.0.18",
     "aws-amplify-react": "^4.1.17",
-    "aws-sdk": "^2.712.0",
+    "aws-sdk": "^2.1362.0",
     "date-fns": "^2.14.0",
     "element-react": "^1.4.34",
     "element-theme-default": "^1.4.13",
